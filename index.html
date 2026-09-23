@@ -3,661 +3,1686 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matthew Benko — Network Security Engineer</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+<title>Matt Benko — IT Security Engineer · Email Security, Attack-Surface Reduction &amp; Secure Automation</title>
+<meta name="description" content="Portfolio of Matt Benko, IT Security Engineer: 80% phishing attack-surface reduction, 70–90% malicious-email reduction, 5,000+ enterprise risks migrated, 250+ employees trained. CEH · Network+ · A+ · AWS CCP.">
+<meta name="theme-color" content="#080c10">
+<meta property="og:title" content="Matt Benko — IT Security Engineer · Email Security, Attack-Surface Reduction &amp; Secure Automation">
+<meta property="og:description" content="IT Security Engineer who cut phishing attack surface 80% and malicious email volume 70–90% — and ships secure automation in PowerShell and Python. Case studies, verified certs, and the agent workflow that built this page.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mattbenko.xyz/">
+<!-- MC49 / §11.2 — custom terminal-prompt SVG favicon (retires the emoji saga) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22 width=%2232%22 height=%2232%22%3E%3Crect x=%221%22 y=%221%22 width=%2230%22 height=%2230%22 rx=%227%22 fill=%22%23080c10%22/%3E%3Cpolyline points=%228.5,9.5 15.5,16 8.5,22.5%22 fill=%22none%22 stroke=%22%233dd68c%22 stroke-width=%223.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cline x1=%2218.5%22 y1=%2222.5%22 x2=%2224.5%22 y2=%2222.5%22 stroke=%22%233dd68c%22 stroke-width=%223.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #080c10;
-    --surface: #0f151c;
-    --surface-raised: #161d26;
-    --border: #1e2a38;
-    --border-active: #2d4a3e;
-    --text-primary: #e4ebf3;
-    --text-secondary: #8899aa;
-    --text-muted: #5a6d7e;
-    --accent: #3dd68c;
-    --accent-glow: rgba(61, 214, 140, 0.12);
-    --accent-dim: #2a5f4a;
-    --danger: #f97066;
-    --warning: #f5a623;
-    --info: #5b9bd5;
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-    --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --max-width: 900px;
-    --transition: 180ms ease;
+/* ═══════════════════════════════════════════════════════════════════════
+   OPERATION FIRST IMPRESSION — B4 integrated build (structure + copy + SVG)
+   Recipe: D2 skeleton/guard architecture · D1 boot terminal + agent
+   section + favicon + prompt headers · D3 live-verified Credly wall.
+   Single file · zero JavaScript · WCAG AAA (computed pairs, §7.3 spec).
+   DNA immutable: #080c10 · #3dd68c · JetBrains Mono + Inter · prompt nav.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Tokens — §7.1 verbatim (35/35 pre-computed pairs PASS) ── */
+:root {
+  --bg:           #080c10;   /* page — DNA */
+  --bg-raised:    #0d131a;   /* terminal windows, tiles */
+  --bg-panel:     #111922;   /* chrome bars, wells */
+  --bg-inset:     #0a0f15;   /* stat tiles, inset wells */
+
+  --text-1:       #e8eff6;   /* headlines, values */
+  --text-2:       #aebccb;   /* body copy */
+  --text-3:       #95abbf;   /* dates, IDs, meta — floor token, never darker */
+
+  --accent:       #3dd68c;   /* DNA green — prompts, labels */
+  --accent-hi:    #7ce9ae;   /* focus rings, small green text */
+  --accent-deep:  #7ce8b6;   /* green text on tiles */
+  --amber:        #f5b84d;   /* project-2 accent */
+  --blue:         #79bdf5;   /* project-3 accent */
+  --danger:       #ff8f86;   /* status text only */
+  --warn:         #f5a623;
+
+  --border:       #52687f;   /* functional hairlines ≥3:1 all surfaces */
+  --border-2:     #5d768f;   /* emphasized borders */
+  --border-faint: #223040;   /* DECORATIVE ONLY — never a sole UI boundary */
+  --border-active:#3dd68c;   /* hover/active snap (MC37) */
+
+  --glow:         rgba(61, 214, 140, 0.10);
+  --glow-soft:    rgba(61, 214, 140, 0.05);
+  --hairline:     rgba(61, 214, 140, 0.15);  /* MC16 section divider — decorative */
+
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Type ladder — §4, single source of every font-size (MC26: no dupes) */
+  --fs-hero:  clamp(2.5rem, 7vw, 3.75rem);    /* h1 (MC1) */
+  --fs-stat:  clamp(2rem, 3.6vw, 2.6rem);      /* hero stat values (2x2 wall; Q1-001 fold) */
+  --fs-h2:    clamp(1.5rem, 3vw, 2rem);       /* section titles */
+  --fs-h3:    1.05rem;                        /* role names, tile titles */
+  --fs-body:  1rem;                           /* body, line-height 1.65 (MC53) */
+  --fs-small: 0.875rem;                       /* bullets, chips */
+  --fs-meta:  0.75rem;                        /* dates, IDs — floor 0.75rem (MC32) */
+  --fs-label: 0.8rem;                         /* section labels (MC13) */
+
+  --container: 1100px;                        /* D2 editorial width (§4) */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --speed: 180ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* E6 counter finals — pinned for print (F-1) */
+  --n80: 80; --n70: 70; --n90: 90; --n5000: 5000; --n250: 250;
+}
+
+/* ── 2. Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.65;              /* MC53 */
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--accent); }
+a:hover { color: var(--accent-hi); }
+strong { color: var(--text-1); font-weight: 600; }
+.num { color: var(--text-1); font-weight: 600; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Keyboard focus — visible everywhere, AAA non-text (E5 twin rule) */
+:focus-visible {
+  outline: 2px solid var(--accent-hi);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Skip link — F-17: SR-clean text; '## ' prefix kept visual-only via the
+   alt-text syntax (content / '') so it never joins the accessible name. */
+.skip-link {
+  position: absolute; left: 1rem; top: -4.5rem; z-index: 200;
+  font-family: var(--font-mono); font-size: 0.85rem;
+  background: var(--bg-panel); color: var(--accent-hi);
+  padding: 0.75rem 1.1rem; min-height: 44px;
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-sm); text-decoration: none;
+  transition: top var(--speed) var(--ease-out);
+}
+.skip-link::before { content: '## ' / ''; color: var(--text-3); }
+.skip-link:focus { top: 1rem; }
+
+/* ── 3. Layout ── */
+.container {
+  position: relative; z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: clamp(1.25rem, 5vw, 2rem);
+  padding-right: clamp(1.25rem, 5vw, 2rem);
+}
+
+/* ── 4. Progress hairline (E2 — decorative, aria-hidden, guarded) ── */
+.progress {
+  position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 110;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .progress { animation: grow linear both; animation-duration: 1ms; animation-timeline: scroll(root); }
+  }
+}
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ── 5. Nav — D1 prompt bar + :has(:target) active state ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8, 12, 16, 0.88);
+  backdrop-filter: blur(8px);          /* Q4-008: 14px → 8px scroll-paint cost */
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+nav .container {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.25rem 1rem;
+  padding-top: 0.3rem; padding-bottom: 0.3rem;
+}
+.brand {
+  font-family: var(--font-mono); font-size: 0.88rem; font-weight: 700;
+  color: var(--text-1); text-decoration: none; letter-spacing: -0.01em;
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+.brand .path { color: var(--accent); }
+.brand .dollar { color: var(--text-3); }
+/* Idle block caret — the only always-on animation (tiny, single element).
+   MC6: reduced-motion renders it a static block, never opacity:0. */
+.caret {
+  display: inline-block; width: 0.55em; height: 1.05em; margin-left: 3px;
+  background: var(--accent); vertical-align: text-bottom;
+}
+.nav-links { display: flex; flex-wrap: wrap; list-style: none; }
+.nav-links a {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;   /* MC8 */
+  letter-spacing: 0.06em;                                              /* MC8 */
+  color: var(--text-3); text-decoration: none;
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: 0 0.65rem; position: relative;
+  transition: color var(--speed) var(--ease-out);
+}
+.nav-links a::before { content: './' / ''; color: var(--text-3); margin-right: 1px; transition: color var(--speed); }
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--accent-hi); }
+.nav-links a:hover::before, .nav-links a:focus-visible::before { color: var(--accent); }
+/* Active state — pure CSS, no JS (D1 :has(:target) pattern). Default: summary. */
+html:not(:has(:target)) .nav-links a[href="#summary"],
+html:has(#summary:target)    .nav-links a[href="#summary"],
+html:has(#skills:target)     .nav-links a[href="#skills"],
+html:has(#experience:target) .nav-links a[href="#experience"],
+html:has(#projects:target)   .nav-links a[href="#projects"],
+html:has(#certs:target)      .nav-links a[href="#certs"],
+html:has(#agent:target)      .nav-links a[href="#agent"],
+html:has(#education:target)  .nav-links a[href="#education"] { color: var(--accent-hi); }
+html:not(:has(:target)) .nav-links a[href="#summary"]::before,
+html:has(#summary:target)    .nav-links a[href="#summary"]::before,
+html:has(#skills:target)     .nav-links a[href="#skills"]::before,
+html:has(#experience:target) .nav-links a[href="#experience"]::before,
+html:has(#projects:target)   .nav-links a[href="#projects"]::before,
+html:has(#certs:target)      .nav-links a[href="#certs"]::before,
+html:has(#agent:target)      .nav-links a[href="#agent"]::before,
+html:has(#education:target)  .nav-links a[href="#education"]::before { color: var(--accent); }
+html:not(:has(:target)) .nav-links a[href="#summary"]::after,
+html:has(#summary:target)    .nav-links a[href="#summary"]::after,
+html:has(#skills:target)     .nav-links a[href="#skills"]::after,
+html:has(#experience:target) .nav-links a[href="#experience"]::after,
+html:has(#projects:target)   .nav-links a[href="#projects"]::after,
+html:has(#certs:target)      .nav-links a[href="#certs"]::after,
+html:has(#agent:target)      .nav-links a[href="#agent"]::after,
+html:has(#education:target)  .nav-links a[href="#education"]::after {
+  content: ''; position: absolute; left: 0.65rem; right: 0.65rem; bottom: 6px;
+  height: 2px; background: var(--accent);
+}
+
+/* ── 6. Sections — spacing (MC15), prompt-command headers (MC14) ── */
+section, header.hero { scroll-margin-top: 84px; }   /* F-20: ≥72px */
+.section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+.section:first-of-type { padding-top: clamp(4rem, 8vw, 6rem); }  /* MC15 */
+.sec-cmd {
+  font-family: var(--font-mono);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 1.6rem;
+}
+.sec-cmd .prompt { color: var(--accent); font-weight: 500; white-space: nowrap; }
+.sec-cmd .prompt .user { color: var(--accent-hi); }
+.sec-cmd .flag { color: var(--text-3); font-weight: 500; }
+.sec-cmd .sec-num { color: var(--text-3); font-weight: 500; margin-right: 0.4rem; }  /* MC14 */
+.sec-label {                                                                        /* MC13 */
+  font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3);
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+.sec-label::after { content: ''; width: 44px; height: 2px; background: var(--hairline); }
+
+/* MC16 — perceptible accent-tinted section dividers (decorative) */
+section + section, header.hero + section { border-top: 1px solid var(--hairline); }
+
+/* ── 7. Hero — the boot terminal (D1) in D2's grid, §6 ── */
+.hero { padding: 2.6rem 0 3rem; border-bottom: 1px solid var(--border); }
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas: "term stats";
+  gap: 2rem;
+  align-items: start;
+}
+.hero-term  { grid-area: term; min-width: 0; }
+.hero-side  { grid-area: stats; min-width: 0; }
+
+/* Terminal window chrome (shared: hero + case-study tiles) */
+.term {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+.term-bar {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--text-3);
+}
+.term-dots { display: inline-flex; gap: 6px; }
+.term-dots i {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border-2); border: 1px solid var(--border);
+}
+.term-dots i:nth-child(1) { background: #57333b; border-color: #7a4650; }
+.term-dots i:nth-child(2) { background: #5c4a2e; border-color: #83683c; }
+.term-dots i:nth-child(3) { background: #2e4d3c; border-color: #3f6d54; }
+.term-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1 1 auto; }
+.term-body { padding: 1.4rem 1.5rem 1.6rem; min-width: 0; }
+
+/* Boot sequence (E7 typed + E4 staggered). Golden rule: keyframes define
+   `from` only — full text is the default; every ch width is measured. */
+.boot { font-family: var(--font-mono); }
+.boot-line { margin-bottom: 0.55rem; line-height: 1.5; }
+.prompt { color: var(--accent); white-space: nowrap; }
+.prompt .user { color: var(--accent-hi); }
+.cmd-type {
+  display: inline-block; overflow: hidden; white-space: nowrap;
+  vertical-align: bottom; color: var(--text-1);
+}
+.boot-h1 {
+  font-family: var(--font-mono);
+  font-size: var(--fs-hero);              /* MC1 ladder */
+  font-weight: 700;
+  letter-spacing: -0.04em;                /* MC1 */
+  line-height: 1.12;
+  margin: 0.45rem 0 1rem;
+  color: var(--text-1);
+  overflow: hidden; white-space: nowrap;  /* Q4-003: typed mask must never 2-line mid-flight */
+}
+.boot-log { list-style: none; margin-top: 0.9rem; }
+.boot-log li {
+  font-size: 0.77rem;                /* Q1-004/R1-NEW-001: 65ch+prefix must hold one line at 1440 */
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.boot-log .ok { color: var(--accent); font-weight: 500; }
+.boot-log .mod { color: var(--text-1); }
+.boot-log .tools { color: var(--text-3); }
+.boot-out { color: var(--text-2); font-size: 0.98rem; margin-top: 1rem; }
+.boot-out .lane { color: var(--text-1); font-weight: 600; }
+.boot-out .sep { color: var(--text-3); padding: 0 0.35rem; }
+.boot-idle { display: flex; align-items: center; margin-top: 1.1rem; }
+.boot-idle .cursor-label { color: var(--text-3); }
+
+/* Stat column — D2's wall, F-16: all four floor metrics */
+.stat-stack {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+.stat {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 0.95rem 1.1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);        /* MC41 shadow-sm at rest */
+  transition: transform var(--speed) var(--ease-out), border-color var(--speed), box-shadow var(--speed);
+}
+.stat:hover, .stat:focus-within { border-color: var(--border-active); }  /* MC37 */
+.stat-amber { border-left-color: var(--amber); }
+.stat-blue  { border-left-color: var(--blue); }
+.stat-num {
+  font-family: var(--font-mono); font-weight: 700;
+  font-size: var(--fs-stat);
+  color: var(--text-1); letter-spacing: -0.02em; line-height: 1.1;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label { display: block; margin-top: 0.3rem; font-size: 0.88rem; color: var(--text-2); }
+.stat-src { display: block; margin-top: 0.15rem; font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--text-3); }
+
+/* E6 — THE ONE counter recipe (§5.1, S-7): the registered property
+   animates on the SAME node that owns counter-reset. Never a pseudo-child
+   host, never reset-on-parent/animate-on-child (all three candidates
+   broke exactly here; painted-pixel gate F-15 verifies at settle).
+   3-layer fallback: @property engines = smooth count-up; custom-props
+   without @property = discrete flip (number never blank); no custom
+   props = real HTML number stays visible. */
+@property --n80   { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@property --n70   { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@property --n90   { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@property --n5000 { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@property --n250  { syntax: "<integer>"; inherits: false; initial-value: 0; }
+
+.stat-count { display: none; }
+@supports (--x: 0) {
+  .stat-count { display: inline; }
+  .stat-real  { position: absolute; width: 1px; height: 1px; margin: -1px;
+                overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+.stat-count.v80   { counter-reset: n80 var(--n80); }
+.stat-count.v7090 { counter-reset: n70 var(--n70) n90 var(--n90); }
+.stat-count.v5000 { counter-reset: n5000 var(--n5000); }   /* counts 0→5; ",000+" is literal */
+.stat-count.v250  { counter-reset: n250 var(--n250); }
+.stat-count::after {
+  font-family: var(--font-mono); font-weight: 700; color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+.stat-count.v80::after   { content: counter(n80) "%"; }
+.stat-count.v7090::after { content: counter(n70) "–" counter(n90) "%"; }
+.stat-count.v5000::after { content: counter(n5000) ",000+"; }
+.stat-count.v250::after  { content: counter(n250) "+"; }
+
+/* Contact chips (F-3) + CTA (F-5) + resume affordance (MC46) */
+.contact-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.1rem; }
+.chip {
+  font-family: var(--font-mono); font-size: 0.78rem;
+  color: var(--text-2); text-decoration: none;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg-raised);
+  padding: 0.6rem 0.85rem; min-height: 44px; min-width: 44px;
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  transition: color var(--speed), border-color var(--speed), background var(--speed);
+}
+.chip .k { color: var(--accent); }
+.chip .lbl-short { display: none; }   /* mobile shows short forms */
+.chip svg { width: 15px; height: 15px; flex: none; }
+.chip:hover, .chip:focus-visible {
+  color: var(--accent-hi); border-color: var(--border-active); background: var(--glow-soft);
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.2rem; }
+.hero-cta {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
+  color: #062b1b; background: var(--accent);
+  border: 1px solid var(--accent); border-radius: var(--radius-sm);
+  padding: 0.7rem 1.15rem; text-decoration: none;
+  transition: transform var(--speed) var(--ease-out), background var(--speed);
+}
+.hero-cta:hover, .hero-cta:focus-visible { background: var(--accent-hi); border-color: var(--accent-hi); transform: translateY(-2px); color: #04170e; }
+.hero-resume {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
+  color: var(--accent-hi); background: transparent;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.7rem 1.15rem; text-decoration: none;
+  transition: border-color var(--speed), color var(--speed), background var(--speed);
+}
+.hero-resume:hover, .hero-resume:focus-visible { border-color: var(--border-active); color: var(--accent-hi); background: var(--glow-soft); }
+
+/* Hero trust line (F-3/F-6): linked cert names, no-scroll reachability */
+.hero-trust {
+  margin-top: 1.2rem; font-family: var(--font-mono);
+  font-size: var(--fs-small); color: var(--text-3);
+}
+.hero-trust a { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+.hero-trust a:hover, .hero-trust a:focus-visible { color: var(--accent); }   /* Q1-002: perceptible delta (accent-deep≈accent-hi at 1.003:1) */
+.hero-trust .sep { padding: 0 0.3rem; }
+
+/* ── 8. Summary + cert badge strip (early trust, R1 #7) ── */
+.summary-wrap { max-width: 68ch; }
+.summary-text { color: var(--text-2); font-size: 1.05rem; }
+.summary-text strong { font-weight: 500; }   /* MC54 */
+.badge-strip {
+  list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 1.3rem; padding: 0;
+}
+.badge-strip li a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px;
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+  color: var(--text-2); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 0.45rem 0.9rem; background: var(--bg-raised);
+  transition: border-color var(--speed), color var(--speed), transform var(--speed) var(--ease-out);
+}
+.badge-strip li a .tick { color: var(--accent); font-weight: 700; }
+.badge-strip li a:hover, .badge-strip li a:focus-visible {
+  border-color: var(--border-active); color: var(--accent-hi); transform: translateY(-2px);
+}
+.badge-strip li.more a { border-style: dashed; color: var(--text-3); }
+.badge-strip li.more a:hover, .badge-strip li.more a:focus-visible { color: var(--accent-hi); }
+
+/* ── 9. Skills — 6 Boolean clusters (MC18); chips NOT focusable (F-18) ── */
+.skill-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.skill-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.2rem 1.3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: border-color var(--speed), transform var(--speed) var(--ease-out), box-shadow var(--speed);
+}
+.skill-card:hover, .skill-card:focus-within {
+  border-color: var(--border-active);   /* MC37 */
+  transform: translateY(-4px);          /* MC29 compositor-safe */
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);   /* MC41 shadow-lg */
+}
+.skill-card h3 {
+  font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.04em; color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+.skill-card h3 .n { color: var(--text-3); font-weight: 500; }
+.skill-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.skill-list li {
+  font-family: var(--font-mono); font-size: 0.78rem;
+  color: var(--text-2);
+  border: 1px solid var(--border-faint);      /* decorative chip outline */
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  background: var(--bg-inset);
+  transition: border-color var(--speed);
+}
+.skill-card:hover .skill-list li { border-color: rgba(61, 214, 140, 0.4); }  /* MC20 accent-40% */
+
+/* ── 10. Experience — D2 vertical timeline ── */
+.timeline { list-style: none; position: relative; padding-left: 1.6rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0.45rem; top: 0.4rem; bottom: 0.4rem;
+  width: 2px; background: var(--border);    /* functional rail ≥3:1 */
+  transform-origin: top;
+}
+.tl-item { position: relative; padding-bottom: 2.1rem; }
+.tl-item:last-child { padding-bottom: 0.5rem; }
+.tl-item::before {
+  content: ''; position: absolute; left: -1.6rem; top: 0.42rem;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--accent);
+}
+.tl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1rem; }
+.tl-head h3 { font-size: var(--fs-h3); font-weight: 700; color: var(--text-1); }
+.tl-period {
+  font-family: var(--font-mono); font-size: var(--fs-meta);
+  color: var(--text-3); white-space: nowrap;
+}
+.tl-org {
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
+  color: var(--accent-deep); margin: 0.15rem 0 0.6rem;
+}
+.tl-sub { font-size: var(--fs-small); color: var(--text-3); margin: -0.35rem 0 0.6rem; }
+.tl-bullets { list-style: none; }
+.tl-bullets li {
+  font-size: var(--fs-small); color: var(--text-2);
+  padding-left: 1.15rem; position: relative; margin-bottom: 0.45rem;
+  line-height: 1.65;
+}
+.tl-bullets li::before {
+  content: '▸'; position: absolute; left: 0; top: 0;
+  color: var(--accent); font-size: 0.8rem;
+}
+.xref {
+  font-family: var(--font-mono); font-size: var(--fs-meta);
+  color: var(--text-3); white-space: nowrap;
+}
+.tl-aside {
+  font-size: var(--fs-small); color: var(--text-3);
+  padding-left: 1.15rem; position: relative; line-height: 1.65;
+}
+.tl-aside::before {
+  content: '·'; position: absolute; left: 0.15rem; top: 0;
+  color: var(--text-3);
+}
+
+/* ── 11. Projects — D1 terminal-window case-study tiles (§9) ── */
+.tile-stack-cases { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+.tile { position: relative; min-width: 0; }
+.tile-accent-green .term { border-top: 3px solid var(--accent); }
+.tile-accent-amber .term { border-top: 3px solid var(--amber); }
+.tile-accent-blue  .term { border-top: 3px solid var(--blue); }
+.tile {
+  border-radius: var(--radius);
+  transition: transform var(--speed) var(--ease-out);
+}
+.tile:hover, .tile:focus-within { transform: translateY(-4px); }   /* MC29 */
+.tile .term { transition: border-color var(--speed), box-shadow var(--speed); }
+.tile:hover .term, .tile:focus-within .term {
+  border-color: var(--border-active);                              /* MC37 */
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55);                     /* MC41 */
+}
+.tile-status { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
+.tile-status i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.tile-accent-amber .tile-status { color: var(--amber); }
+.tile-accent-amber .tile-status i { background: var(--amber); }
+.tile-accent-blue .tile-status { color: var(--blue); }
+.tile-accent-blue .tile-status i { background: var(--blue); }
+
+.tile h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-1); margin-bottom: 0.2rem; }
+.tile-res {
+  display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+  margin: 0.55rem 0 0.9rem;
+}
+.tile-res-val {
+  font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.tile-accent-green .tile-res-val { color: var(--accent-deep); }
+.tile-accent-amber .tile-res-val { color: var(--amber); }
+.tile-accent-blue  .tile-res-val { color: var(--blue); }
+.tile-res-lbl { font-size: var(--fs-small); color: var(--text-3); }
+
+.case { display: grid; gap: 0.7rem; margin-bottom: 0.9rem; }
+.case-row { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.8rem; }
+.case-row dt {
+  font-family: var(--font-mono); font-size: var(--fs-meta); font-weight: 500;
+  letter-spacing: 0.05em; color: var(--accent);
+  padding-top: 0.2rem;
+}
+.case-row dd { font-size: var(--fs-small); color: var(--text-2); line-height: 1.65; }
+.case-row dd .r { color: var(--text-1); font-weight: 600; }
+.tile-stack {
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-3);
+  margin-bottom: 0.35rem;
+}
+.tile-stack .k { color: var(--text-3); }
+.tile-friction {
+  display: flex; gap: 0.5rem; align-items: baseline;
+  font-size: var(--fs-small); color: var(--text-3);
+  border-left: 2px solid var(--border-faint);
+  padding: 0.25rem 0 0.25rem 0.8rem;
+  margin: 0.6rem 0 0.9rem;
+}
+.tile-friction .fl-label {
+  font-family: var(--font-mono); font-size: var(--fs-meta); font-weight: 500;
+  color: var(--warn); white-space: nowrap;
+}
+.tile-link {
+  display: inline-flex; align-items: center; gap: 0.4rem; min-height: 44px;
+  font-family: var(--font-mono); font-size: 0.82rem; font-weight: 500;
+  color: var(--accent); text-decoration: underline; text-underline-offset: 3px;   /* MC45 */
+  overflow-wrap: anywhere;   /* unbreakable repo URLs must never force page overflow */
+  transition: color var(--speed);
+}
+.tile-link:hover, .tile-link:focus-visible { color: var(--accent-hi); }
+
+/* E8 — border-beam, hover/focus-only, registered angle (guarded) */
+@property --beam { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+/* ── 12. Cert wall — D3 badge cards, live-verified hrefs (§10.3) ── */
+.certwall { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; }
+a.badge-card {
+  display: flex; flex-direction: column; gap: 0.28rem; min-height: 44px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);      /* MC41 rest */
+  transition: border-color var(--speed), transform var(--speed) var(--ease-out), box-shadow var(--speed);
+}
+.badge-strip li.more a, .hero-trust a {
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+/* Inline text links: expand the hit box to ≥44px both axes without
+   shifting the surrounding line (padding out, margin back in). */
+.hero-trust a { padding: 0.55rem 0.85rem; margin: -0.55rem -0.85rem; min-width: 44px; justify-content: center; }
+.colophon a { padding: 0.8rem 0; margin: -0.8rem 0; display: inline-flex; align-items: center; }
+a.badge-card:hover, a.badge-card:focus-visible {
+  border-color: var(--border-active);              /* MC37 */
+  transform: translateY(-4px);                     /* MC29 */
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);      /* MC41 hover */
+}
+.b-status {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: var(--fs-meta); font-weight: 500;
+  color: var(--accent); letter-spacing: 0.03em;
+}
+.b-status .tick {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+}
+.b-name { font-weight: 600; font-size: 0.95rem; color: var(--text-1); }
+.b-id {
+  font-family: var(--font-mono); font-size: var(--fs-meta);   /* MC32: ≥0.75rem */
+  letter-spacing: 0.05em;                                     /* MC32 */
+  text-transform: uppercase;
+  color: var(--text-3);
+  word-break: break-all;
+}
+.b-exp { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--text-3); }
+.b-verify {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+  color: var(--accent-hi); margin-top: 0.35rem;
+  text-decoration: underline; text-underline-offset: 3px;       /* MC45 */
+}
+a.badge-card:hover .b-verify, a.badge-card:focus-visible .b-verify { color: var(--accent-deep); }
+.cert-other {
+  list-style: none; margin-top: 1.1rem;
+  font-size: var(--fs-small); color: var(--text-3);
+  display: grid; gap: 0.3rem;
+}
+.cert-other .hl { color: var(--accent-deep); font-weight: 500; }
+
+/* ── 13. Agent section (§10.4 — D1 transplant, 6-tile grid) ── */
+.agent-intro { color: var(--text-2); max-width: 72ch; margin-bottom: 1.4rem; }
+.agent-stats {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+.agent-stat {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.1rem;
+  transition: border-color var(--speed), transform var(--speed) var(--ease-out);
+}
+.agent-stat:hover { border-color: var(--border-active); transform: translateY(-2px); }
+.agent-stat b {
+  display: block;
+  font-family: var(--font-mono); font-size: 1.7rem; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.02em; line-height: 1.15;
+}
+.agent-stat span { display: block; margin-top: 0.25rem; font-size: var(--fs-small); color: var(--text-2); }
+details.deep {
+  margin-top: 1.4rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+details.deep summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: 0.6rem;
+  min-height: 52px; padding: 0.8rem 1.1rem;
+  font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500;
+  color: var(--accent);
+}
+details.deep summary::-webkit-details-marker { display: none; }
+details.deep summary .mark { color: var(--text-3); font-weight: 700; }
+details.deep[open] summary .mark::before { content: '[-]'; }
+details.deep summary .mark::before { content: '[+]'; }
+details.deep summary:hover, details.deep summary:focus-visible { color: var(--accent-hi); }
+.deep-body { padding: 0.2rem 1.2rem 1.3rem; }
+.deep-body h3 {
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.04em; color: var(--accent-deep);
+  margin: 1.1rem 0 0.5rem;
+}
+.deep-body ul { list-style: none; }
+.deep-body li {
+  font-size: var(--fs-small); color: var(--text-2);
+  padding-left: 1.1rem; position: relative; margin-bottom: 0.45rem; line-height: 1.65;
+}
+.deep-body li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+.deep-body p { font-size: var(--fs-small); color: var(--text-2); margin: 0.5rem 0; line-height: 1.65; }
+.diagram-wrap { margin: 1.2rem 0 0.6rem; }
+.diagram-note { font-size: var(--fs-meta); color: var(--text-3); margin-top: 0.5rem; }
+.how-built {
+  margin-top: 1.2rem;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.1rem 1.2rem;
+}
+.how-built h3 {
+  font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 0.7rem;
+}
+.how-built ul { list-style: none; }
+.how-built li {
+  font-size: var(--fs-small); color: var(--text-2);
+  padding-left: 1.1rem; position: relative; margin-bottom: 0.4rem; line-height: 1.65;
+}
+.how-built li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+.how-built li b { color: var(--text-1); font-family: var(--font-mono); }
+
+/* ── 13b. B3 architecture diagram (from diagram-fragment.html) ── */
+#caddy-arch .b3-caption {
+  font-family: var(--font-mono, ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace);
+  font-size: 0.75rem; color: var(--text-3, #95abbf); margin: 0.5rem 0 0;
+  text-align: center; letter-spacing: 0.02em;
+}
+#caddy-arch .b3-arch-mobile { display: none; }
+@media (max-width: 767.98px) {
+  #caddy-arch .b3-arch-desktop { display: none; }
+  #caddy-arch .b3-arch-mobile { display: block; }
+}
+#caddy-arch svg { width: 100%; height: auto; display: block; }
+/* Real-render label floor (B3 bar: ≥12px at render): the figure renders at
+   ~1034/1120 = 0.92× inside the deep-dive, so bump viewBox units — full-bleed
+   figure (cancel .deep-body side padding), titles 13, mobile labels 14. */
+.diagram-wrap { margin-left: -1.2rem; margin-right: -1.2rem; }
+#caddy-arch text { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em; }   /* Q1-007: site mono ladder, not raw ui-monospace */
+#caddy-arch .b3-arch-desktop .b3-t { font-size: 13px; }
+#caddy-arch .b3-arch-mobile text { font-size: 14px; }
+#caddy-arch .b3-node { fill: #0d131a; stroke: #52687f; stroke-width: 1.5px; }
+#caddy-arch .b3-t { font-weight: 600; }
+#caddy-arch .b3-wire, #caddy-arch .b3-dots { stroke-width: 2px; }
+#caddy-arch .b3-head, #caddy-arch .b3-dots { stroke-linecap: round; }
+#caddy-arch svg { break-inside: avoid; }
+
+  /* B3 motion — finished state is the default (base renders fully drawn);
+     all motion lives inside the no-preference guard (R2 golden rule). */
+  @media (prefers-reduced-motion: no-preference) {
+    #caddy-arch .b3-wire { stroke-dasharray: var(--len);
+               animation: b3-draw .7s ease-out both;
+               animation-delay: calc(.15s + var(--wi) * .12s); }
+    #caddy-arch .b3-dots { opacity: 0;
+               animation: b3-dots-in .4s ease-out both,
+                          b3-march 1.3s linear infinite;
+               animation-delay: calc(1.15s + var(--wi) * .12s),
+                                calc(1.15s + var(--wi) * .12s); }
+    #caddy-arch .b3-node, #caddy-arch .b3-head { animation: b3-boxin .5s ease-out both;
+                         animation-delay: calc(var(--wi) * .12s); }
+  }
+  @keyframes b3-draw    { from { stroke-dashoffset: var(--len); }
+                          to   { stroke-dashoffset: 0; } }
+  @keyframes b3-march   { to { stroke-dashoffset: -12; } }
+  @keyframes b3-boxin   { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes b3-dots-in { from { opacity: 0; } to { opacity: .95; } }
+
+/* B3 diagram — print: keep the figure whole; SVG paints its own palette */
+#caddy-arch { break-inside: avoid; }
+
+/* ── 14. Education ── */
+.edu-block {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.3rem 1.4rem;
+  margin-bottom: 1rem;
+  transition: border-color var(--speed);
+}
+.edu-block:hover { border-color: var(--border-active); }
+.edu-degree { font-size: 1.1rem; font-weight: 700; color: var(--accent-deep); }
+.edu-school { font-size: var(--fs-small); color: var(--text-2); margin-top: 0.2rem; }
+.edu-meta { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--text-3); margin-top: 0.15rem; }
+.edu-detail { font-size: var(--fs-small); color: var(--text-2); margin-top: 0.5rem; line-height: 1.65; }
+
+/* ── 15. Footer (MC48) ── */
+footer {
+  border-top: 1px solid var(--hairline);
+  padding: 2.2rem 0 2.6rem;
+  margin-top: 1rem;
+}
+.foot-cmd {
+  font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-3);
+  margin-bottom: 1rem;
+}
+.foot-cmd .prompt .user { color: var(--accent-hi); }
+.foot-cmd .prompt { color: var(--accent); }
+.foot-cmd .exit { color: var(--text-1); font-weight: 500; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; }
+.footer-links a {
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--text-2); text-decoration: underline; text-underline-offset: 3px;  /* MC45 */
+  display: inline-flex; align-items: center; min-height: 44px;                   /* F-19 */
+  transition: color var(--speed);
+}
+.footer-links a:hover, .footer-links a:focus-visible { color: var(--accent-hi); }
+.colophon {
+  margin-top: 1.2rem;
+  font-size: 0.8rem;   /* MC48 */
+  color: var(--text-3); line-height: 1.7;
+}
+.colophon a { color: var(--accent-deep); }
+.colophon a:hover, .colophon a:focus-visible { color: var(--accent); }   /* Q1-002: perceptible delta */
+.back-top {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--accent); text-decoration: none;
+  margin-top: 0.4rem;
+}
+.back-top:hover, .back-top:focus-visible { color: var(--accent-hi); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ANIMATION SYSTEM — every entrance/reveal inside no-preference guards
+   (F-2 golden rule: the finished state is the default; no hidden state
+   outside guards). Compositor-only keyframes (F-8): transform/opacity.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Caret blink — the one infinite loop (tiny, single element) */
+  .caret { animation: caret-blink 1.1s step-end infinite; }
+  @keyframes caret-blink { 50% { opacity: 0; } }
+
+  /* E4 — hero entrance choreography, ≤700ms stagger ladder */
+  .enter {
+    animation: rise 0.4s var(--ease-out) both;              /* Q1-I3/Q4-009: 0.55s+4x90ms=910ms → 0.4s+4x65ms=660ms ≤700ms */
+    animation-delay: calc(var(--i, 0) * 65ms);
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+
+  /* E7 — typed text. Each width = exact ch count of its string
+     (F-21 — J1's 37ch-in-35ch lesson; computed by probe, not by eye).
+     from-width-only keyframes: a no-animation browser shows the full
+     line instantly. Boot-log spans exclude the [ OK ] prefix (static). */
+  .cmd-type { width: 6ch; }                       /* "whoami" = 6ch */
+  .t-role  { width: 20ch; }                       /* "./capability --probe" = 20ch */
+  .boot-h1 { width: 13ch; }                       /* "Matthew Benko" = 13ch */
+  .boot-log .t-log1, .boot-log .t-log2, .boot-log .t-log3 {
+    display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: bottom;
+  }                                                                            /* Q4-005: masks were dead on inline spans */
+  .boot-log .t-log1 { width: 57ch; }              /* "email_defense.module — KnowBe4 Defend · Barracuda Gateway" = 57ch */
+  .boot-log .t-log2 { width: 56ch; }              /* "identity_edge.module — Entra ID Conditional Access · MFA" = 56ch */
+  .boot-log .t-log3 { width: 46ch; }              /* "secure_automation.module — PowerShell · Python" = 46ch */
+  @keyframes typing { from { width: 0; } }
+  .t-whoami { animation: typing 0.35s steps(6, end) 0.3s both; }
+  .boot-h1  { animation: typing 0.6s steps(13, end) 0.7s both; }
+  .t-role   { animation: typing 0.5s steps(20, end) 1.3s both; }
+  .t-log1   { animation: typing 0.7s steps(57, end) 1.75s both; }
+  .t-log2   { animation: typing 0.7s steps(56, end) 2.0s both; }
+  .t-log3   { animation: typing 0.6s steps(46, end) 2.25s both; }
+  .boot-out { animation: fade-in 0.4s var(--ease-out) 2.7s both; }
+  .boot-idle { animation: fade-in 0.4s var(--ease-out) 3.1s both; }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } }
+
+  /* E6 — counters run on the counter hosts themselves (§5.1) */
+  .stat-count.v80   { animation: count80 1s ease-out 0.12s both; }    /* Q4-004: zero-window ≤0.4s */
+  .stat-count.v7090 { animation: count7090 1s ease-out 0.2s both; }
+  .stat-count.v5000 { animation: count5000 1s ease-out 0.28s both; }
+  .stat-count.v250  { animation: count250 1s ease-out 0.36s both; }
+  @keyframes count80   { from { --n80: 0; }   to { --n80: 80; } }
+  @keyframes count7090 { from { --n70: 0; --n90: 0; } to { --n70: 70; --n90: 90; } }
+  @keyframes count5000 { from { --n5000: 0; } to { --n5000: 5; } }
+  @keyframes count250  { from { --n250: 0; }  to { --n250: 250; } }
+
+  /* E1 — scroll-driven reveals: section headers + tile/section wrappers
+     ONLY, never focusable elements (R2 rule). 1ms idiom (Firefox-proof).
+     Guarded by no-preference + @supports; fill both. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-duration: 1ms;
+      animation-timeline: view();
+      animation-range: entry 10% entry 60%;   /* Q4-006: 0% left focused hosts invisible pre-entry */
+    }
+    @keyframes reveal-up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .timeline::before {
+      animation: rail-grow linear both;
+      animation-duration: 1ms;
+      animation-timeline: view();
+      animation-range: entry 8% exit 88%;
+    }
+    @keyframes rail-grow { from { transform: scaleY(0.06); } to { transform: scaleY(1); } }
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* E8 — border-beam on case tiles + cert cards, hover/focus only
+     (conic-gradient border-box layer; static accent border is the base).
+     Decorative only — content never depends on it. */
+  @supports (--x: 0) {
+    a.badge-card { position: relative; }
+    .tile::after, a.badge-card::after {
+      content: ''; position: absolute; inset: -1px; z-index: 1;
+      border-radius: inherit; padding: 1px;
+      background: conic-gradient(from var(--beam),
+        transparent 0 68%, var(--beam-c, var(--accent)) 84%, transparent 100%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask-composite: exclude;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s var(--ease-out);
+    }
+    .tile-accent-amber::after { --beam-c: var(--amber); }
+    .tile-accent-blue::after  { --beam-c: var(--blue); }
+    .tile:hover::after, .tile:focus-within::after,
+    a.badge-card:hover::after, a.badge-card:focus-visible::after {
+      opacity: 0.5;   /* beam behind content — content never tinted */
+      animation: beam-spin 3.2s linear infinite;
+    }
+    @keyframes beam-spin { to { --beam: 360deg; } }
+  }
+}
 
-  html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* E11 — prefers-reduced-motion kill-switch (mandatory, R2 pattern).
+   Cursor renders as a static block (MC6), never opacity:0; counters
+   pin to finals; scroll timelines are killed outright. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    animation-timeline: auto !important;   /* scroll timelines ignore duration */
+    scroll-behavior: auto !important;
   }
+  .caret, .boot-idle .caret { animation: none; opacity: 1; }
+  .stat-count { display: none; }           /* static real numbers */
+  .stat-real {
+    position: static !important; width: auto !important; height: auto !important;
+    margin: 0 !important; overflow: visible !important;
+    clip: auto !important; white-space: normal !important;
+  }
+}
 
-  body {
-    font-family: var(--font-sans);
-    background: var(--bg);
-    color: var(--text-primary);
-    line-height: 1.6;
-    min-height: 100vh;
+/* E12 — print (§8, MC50): real numbers print, deep-dive prints un-hidden,
+   light remap to the §7.3 print token set, URLs visible, no mid-flight. */
+@media print {
+  :root { color-scheme: light; --n80: 80; --n70: 70; --n90: 90; --n5000: 5000; --n250: 250; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  body { background: #ffffff; color: #242424; font-size: 11pt; line-height: 1.5; }
+  h1, h2, h3 { font-size: 14pt; color: #111111; }
+  body::before, body::after { display: none; }
+  nav, .progress, .skip-link, .hero-actions, .boot-idle, .back-top { display: none !important; }
+  .term, .stat, .skill-card, .badge-card, .agent-stat, .edu-block, details.deep, .how-built {
+    background: #ffffff; border-color: #999999; box-shadow: none; break-inside: avoid;
   }
+  .term-bar { background: #ffffff; border-color: #bbbbbb; color: #444444; }
+  .term-dots i, .tile-status i, .b-status .tick { background: #444444 !important; border-color: #999999 !important; }
+  .tile-accent-green .term, .tile-accent-amber .term, .tile-accent-blue .term { border-top-color: #999999; }
+  .boot-h1, .cmd-type, .boot-log, .boot-out { color: #111111; }
+  .boot-log .ok, .prompt, .sec-cmd .prompt { color: #005a36; }
+  .boot-log .tools, .sec-cmd .sec-num, .sec-cmd .flag, .tl-period, .stat-src,
+  .cert-other, .edu-meta, .b-exp, .b-id, .how-built li, .footer-note { color: #444444; }
+  .boot-log .mod, .tl-head h3, .tile h3, .b-name, .case-row dd .r, .num, strong { color: #111111; }
+  .agent-stat b, .tile-res-val, .edu-degree, .stat-count { color: #005a36; }
+  .stat-amber, .tl-org, .how-built h3, .deep-body h3, .tile-accent-amber .tile-res-val { color: #754f00; }
+  .tile-accent-blue .tile-res-val { color: #1e4e79; }
+  .badge-card { border-color: #999999; }
+  .b-status { color: #005a36; }
+  .b-status .tick { background: #005a36; }
+  .b-verify { color: #005a36; }
+  .chip { background: #ffffff; border-color: #999999; color: #242424; }
+  .chip .k { color: #005a36; }
+  a { color: #005a36; }
+  .summary-text, .case-row dd, .tl-bullets li, .tl-sub, .edu-detail, .edu-school,
+  .agent-intro, .deep-body li, .deep-body p, .stat-label, .how-built li span,
+  .boot-out, .tile-friction { color: #242424; }
+  .tile-friction { border-left-color: #bbbbbb; }
+  .tl-item::before { background: #ffffff; border-color: #005a36; }
+  /* F-1: real numbers print — counter suppressed, real value restored */
+  .stat-count { display: none !important; }
+  .stat-count::after { content: none !important; }
+  .stat-real {
+    position: static !important; width: auto !important; height: auto !important;
+    margin: 0 !important; overflow: visible !important;
+    clip: auto !important; white-space: normal !important;
+  }
+  /* F-12: the agent deep-dive prints un-hidden */
+  details.deep > .deep-body { display: block !important; }
+  details.deep[open] .deep-body, details.deep:not([open]) .deep-body { display: block !important; }
+  /* MC50: visible link URLs, page-break discipline */
+  .summary-text a::after, .badge-card[href]::after,
+  .footer-links a::after, .hero-trust a::after, .case a[href^="http"]::after {
+    content: " (" attr(href) ")"; font-size: 9pt; color: #444444; word-break: break-all;
+  }
+  .sec-cmd, .foot-cmd { color: #444444; }
+  .sec-label { color: #444444; }
+  section, .section { padding-top: 1.4rem; padding-bottom: 1.4rem; border-top-color: #bbbbbb; }
+  .hero { padding-top: 0; }
+  .certwall, .skill-grid, .agent-stats, .stat-stack { display: block; }
+  .badge-card, .skill-card, .agent-stat, .stat { margin-bottom: 0.7rem; }
+  .cmd-type { width: auto !important; }
+}
 
-  /* ── Background grid ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(61, 214, 140, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(61, 214, 140, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
+/* ── Responsive (§4) ── */
+@media (max-width: 979px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "term" "stats";
+    gap: 1.6rem;
   }
-
-  /* ── Layout ── */
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 1.5rem;
+  .skill-grid { grid-template-columns: 1fr; }
+  .certwall { grid-template-columns: 1fr; }
+  .agent-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case-row { grid-template-columns: 6.2rem minmax(0, 1fr); }
+}
+@media (max-width: 767px) {
+  /* F-4 — mobile hero compaction: payload order term → CTA → 2×2 stat
+     wall → contacts, everything compact so first metric + CTA + contacts
+     clear 667px at 375×667. Boot window collapses toward one line
+     (name + lane lead); log/role/idle lines collapse. */
+  .hero { padding-top: 0.75rem; }
+  .hero-grid { display: flex; flex-direction: column; gap: 0.45rem; }
+  .hero-term, .hero-side { display: contents; }
+  .hero-grid > * { min-width: 0; }
+  .hero-grid .term { order: 1; }
+  .hero-actions { order: 2; margin-top: 0; gap: 0.35rem; }
+  .stat-stack { order: 3; }
+  .contact-row { order: 4; }
+  .hero-trust { order: 5; }
+  /* Nav: brand row + one horizontally scrollable links row (all links
+     stay reachable; nothing dropped, no JS). */
+  nav .container { flex-direction: column; align-items: flex-start; gap: 0; padding-top: 0.2rem; padding-bottom: 0.2rem; }
+  .brand { min-height: 44px; }
+  .nav-links { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; justify-content: flex-start; max-width: 100%; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { min-height: 44px; padding: 0 0.55rem; }
+  .nav-links a::before { content: none; }
+  .term-bar { padding: 0.4rem 0.8rem; }
+  .term-body { padding: 0.7rem 0.9rem 0.8rem; }
+  .boot-line { margin-bottom: 0.2rem; }
+  .boot-line:first-child { display: none; }   /* boot window: one line */
+  .boot-h1 { font-size: clamp(1.75rem, 7.4vw, 2.2rem); margin: 0.2rem 0 0.4rem; }
+  .t-role, .boot-log, .boot-idle { display: none; }
+  .boot-out { margin-top: 0.25rem; font-size: 0.85rem; }
+  .stat-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.4rem; }
+  .stat { padding: 0.5rem 0.6rem; }
+  .stat-num, .stat-count { font-size: clamp(1.25rem, 5.5vw, 1.5rem); }
+  .stat-label {
+    font-size: 0.75rem; margin-top: 0.15rem; line-height: 1.3;  /* Q2-003: clamp removed (mid-token truncation); 0.7→0.75rem floor */
   }
-
-  /* ── Navigation ── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(8, 12, 16, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0.75rem 0;
-  }
-  nav .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .nav-brand {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-  }
-  .nav-brand span { color: var(--text-secondary); font-weight: 400; }
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    transition: color var(--transition);
-  }
-  .nav-links a:hover { color: var(--accent); }
-
-  /* ── Hero ── */
-  .hero {
-    padding: 5rem 0 3rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .hero h1 {
-    font-family: var(--font-mono);
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin-bottom: 0.5rem;
-  }
-  .hero h1 .cursor {
-    display: inline-block;
-    width: 3px;
-    height: 0.9em;
-    background: var(--accent);
-    margin-left: 4px;
-    vertical-align: text-bottom;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-  .hero .title {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-  }
-  .hero .contact {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.5rem;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
-  .hero .contact a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--border-active);
-    transition: color var(--transition), border-color var(--transition);
-  }
-  .hero .contact a:hover { color: var(--accent); border-color: var(--accent); }
-
-  /* ── Sections ── */
-  section {
-    padding: 3rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  section:last-of-type { border-bottom: none; }
-
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 1.5rem;
-  }
-
-  /* ── Summary ── */
-  .summary-text {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    max-width: 680px;
-    line-height: 1.7;
-  }
-
-  /* ── Skill Tags ── */
-  .skill-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  .skill-tag {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    padding: 0.3rem 0.7rem;
-    border-radius: var(--radius-sm);
-    background: var(--surface-raised);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    cursor: default;
-    transition: border-color var(--transition), color var(--transition), background var(--transition);
-  }
-  .skill-tag:hover {
-    border-color: var(--accent-dim);
-    color: var(--accent);
-    background: var(--accent-glow);
-  }
-
-  /* ── Timeline (Experience) ── */
-  .timeline { position: relative; }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-  .timeline-item {
-    position: relative;
-    padding-left: 1.75rem;
-    padding-bottom: 2.5rem;
-  }
-  .timeline-item:last-child { padding-bottom: 0; }
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -3px;
-    top: 0.45rem;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-    z-index: 1;
-  }
-  .timeline-role {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.15rem;
-  }
-  .timeline-org {
-    font-size: 0.9rem;
-    color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    margin-bottom: 0.15rem;
-  }
-  .timeline-period {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    margin-bottom: 0.85rem;
-  }
-  .timeline-details {
-    list-style: none;
-    padding: 0;
-  }
-  .timeline-details li {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    padding: 0.3rem 0 0.3rem 1rem;
-    position: relative;
-    line-height: 1.55;
-  }
-  .timeline-details li::before {
-    content: '>';
-    position: absolute;
-    left: 0;
-    color: var(--accent-dim);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
-
-  /* ── Projects ── */
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    transition: border-color var(--transition), box-shadow var(--transition);
-  }
-  .project-card:hover {
-    border-color: var(--border-active);
-    box-shadow: var(--shadow-md);
-  }
-  .project-card h3 {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.3rem;
-  }
-  .project-card .project-link {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 0.7rem;
-    word-break: break-all;
-  }
-  .project-card .project-link:hover { text-decoration: underline; }
-  .project-card ul {
-    list-style: none;
-    padding: 0;
-  }
-  .project-card ul li {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    padding: 0.25rem 0 0.25rem 1rem;
-    position: relative;
-    line-height: 1.5;
-  }
-  .project-card ul li::before {
-    content: '>';
-    position: absolute;
-    left: 0;
-    color: var(--accent-dim);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
-
-  /* ── Certifications ── */
-  .cert-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 0.75rem;
-  }
-  .cert-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    transition: border-color var(--transition);
-  }
-  .cert-item:hover { border-color: var(--border-active); }
-  .cert-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-primary);
-  }
-  .cert-id {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    word-break: break-all;
-  }
-  .cert-other {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    padding: 0.85rem 1rem;
-    border-left: 2px solid var(--accent-dim);
-  }
-
-  /* ── Education ── */
-  .edu-block {
-    margin-bottom: 1.5rem;
-  }
-  .edu-degree {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .edu-school {
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-family: var(--font-mono);
-  }
-  .edu-meta {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-  }
-  .edu-detail {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* ── Footer ── */
-  footer {
-    padding: 2.5rem 0;
-    text-align: center;
-    border-top: 1px solid var(--border);
-  }
-  footer p {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
-  }
-  footer a:hover { text-decoration: underline; }
-
-  /* ── Responsive ── */
-  @media (max-width: 640px) {
-    .hero h1 { font-size: 1.7rem; }
-    .hero .contact { flex-direction: column; gap: 0.4rem; }
-    .nav-links { gap: 0.85rem; }
-    .nav-links a { font-size: 0.72rem; }
-    .cert-grid { grid-template-columns: 1fr; }
-    section { padding: 2rem 0; }
-    .timeline-item { padding-left: 1.25rem; }
-    .project-card { padding: 1rem; }
-  }
-
-  @media print {
-    body::before { display: none; }
-    nav { position: static; }
-    .hero { padding-top: 0; }
-    .skill-tag:hover { border-color: var(--border); color: var(--text-secondary); background: var(--surface-raised); }
-    .project-card:hover { border-color: var(--border); box-shadow: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero h1 .cursor { animation: none; opacity: 0; }
-  }
+  .stat-src { display: none; }
+  .hero-cta, .hero-resume { min-height: 44px; padding: 0.5rem 0.8rem; font-size: 0.74rem; }
+  .contact-row { margin-top: 0; gap: 0.3rem; flex-wrap: wrap; }
+  .chip { padding: 0.4rem 0.5rem; font-size: 0.7rem; min-width: 0; }
+  .chip .lbl-full { display: none; }
+  .chip .lbl-short { display: inline; }
+  .hero-trust { margin-top: 0; font-size: 0.72rem; }
+  .hero-trust a { padding: 0.4rem 0.5rem; margin: -0.4rem -0.5rem; }
+  .case-row { grid-template-columns: 1fr; gap: 0.15rem; margin-bottom: 0.5rem; }
+  .case-row dd { margin-bottom: 0.35rem; }
+  .diagram-wrap svg { min-width: 0; }
+}
+@media (max-width: 640px) {
+  nav .container { justify-content: flex-start; }
+  .nav-links { justify-content: flex-start; }   /* Q2-001: center strands first links (scrollLeft floor 0) */
+  .sec-cmd { font-size: clamp(1.2rem, 5vw, 1.5rem); }
+  .sec-cmd .prompt { white-space: normal; }
+}
+@media (max-width: 379px) {
+  .tl-xref, .xref { white-space: normal; }   /* one-line look ≥380px only */
+  /* F-4: at 375 keep the 2×2 stat wall (nav + hero already compact). */
+  .stat-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .boot-h1 { font-size: 1.75rem; }
+  .agent-stats { grid-template-columns: 1fr; }
+}
+@media (max-width: 359px) {
+  .stat-stack { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
-<nav>
+<a class="skip-link" href="#summary">skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+
+<nav aria-label="Primary">
   <div class="container">
-    <div class="nav-brand">matt@benko<span>:/portfolio$</span></div>
+    <a class="brand" href="#hero" aria-label="Matt Benko — back to top">matt@benko<span class="path">:/portfolio</span><span class="dollar">$</span><span class="caret" aria-hidden="true"></span></a>
     <ul class="nav-links">
-      <li><a href="#summary">Summary</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#certs">Certifications</a></li>
-      <li><a href="#education">Education</a></li>
+      <li><a href="#summary">summary</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#certs">certs</a></li>
+      <li><a href="#agent">agent</a></li>
+      <li><a href="#education">education</a></li>
     </ul>
   </div>
 </nav>
 
-<div class="container">
+<main class="container">
 
-  <!-- ──── HERO ──── -->
+  <!-- ══════ §3.0 HERO — the boot terminal (D1 + D3 boot-log, §6) ══════ -->
   <header class="hero" id="hero">
-    <h1>Matthew Benko<span class="cursor"></span></h1>
-    <p class="title">Network Security Engineer</p>
-    <div class="contact">
-      <span>📞 (989) 395-1760</span>
-      <a href="mailto:benkomatt@gmail.com">benkomatt@gmail.com</a>
-      <a href="https://linkedin.com/in/matthewbenko/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/BenkoMatt" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://credly.com/users/matthew-benko" target="_blank" rel="noopener">Credly</a>
+    <div class="hero-grid">
+
+      <div class="hero-term">
+        <div class="term boot" role="group" aria-label="Terminal introduction">
+          <div class="term-bar" aria-hidden="true">
+            <span class="term-dots"><i></i><i></i><i></i></span>
+            <span class="term-title">matt@benko: ~ — bash</span>
+          </div>
+          <div class="term-body">
+            <div class="boot-line">
+              <span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span>
+              <span class="cmd-type t-whoami">whoami</span>
+            </div>
+            <h1 class="boot-line boot-h1">Matthew Benko</h1>
+            <div class="boot-line">
+              <span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span>
+              <span class="cmd-type t-role">./capability --probe</span>
+            </div>
+            <!-- S-10: real modules, honest states — no NOMINAL/UPLINK fiction -->
+            <ul class="boot-log" aria-label="Systems verified">
+              <li><span class="ok">[ OK ]</span> <span class="t-log1"><span class="mod">email_defense.module</span> <span class="tools">— KnowBe4 Defend · Barracuda Gateway</span></span></li>
+              <li><span class="ok">[ OK ]</span> <span class="t-log2"><span class="mod">identity_edge.module</span> <span class="tools">— Entra ID Conditional Access · MFA</span></span></li>
+              <li><span class="ok">[ OK ]</span> <span class="t-log3"><span class="mod">secure_automation.module</span> <span class="tools">— PowerShell · Python</span></span></li>
+            </ul>
+            <p class="boot-out">
+              <span class="lane">IT Security Engineer</span>
+              <span class="sep" aria-hidden="true">·</span>email security
+              <span class="sep" aria-hidden="true">·</span>attack-surface reduction
+              <span class="sep" aria-hidden="true">·</span>secure automation
+            </p>
+            <p class="boot-idle" aria-hidden="true">
+              <span class="caret"></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <!-- F-5: the single primary CTA -->
+          <a class="hero-cta" href="#projects">./view-case-studies --now</a>
+          <!-- MC46 / S-9: terminal-styled resume affordance; REL wires the real href at deploy -->
+          <!-- S-9/MC46: href is the REL-expected target. REL must either copy the
+               resume PDF to this path in the served dir (repo has
+               /root/repos/documents/resumes/Benko_InfoSec_2026_051326.pdf) or
+               remove this affordance — never ship a dead 404 (Q4 verifies). -->
+          <a class="hero-resume" href="resume/Benko_InfoSec_2026_051326.pdf" aria-describedby="resume-note">↓ download_resume.pdf</a>
+          <span id="resume-note" class="sr-only">downloads resume as PDF</span>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="stat-stack">
+          <!-- F-16: all four floor metrics in the hero; E6 recipe §5.1 -->
+          <p class="stat enter" style="--i:0">
+            <span class="stat-num"><span class="stat-count v80" aria-hidden="true"></span><span class="stat-real">80%</span></span>
+            <span class="stat-label">phishing attack surface cut — Conditional Access, site-wide MFA &amp; geolocking</span>
+          </p>
+          <p class="stat stat-amber enter" style="--i:1">
+            <span class="stat-num"><span class="stat-count v7090" aria-hidden="true"></span><span class="stat-real">70–90%</span></span>
+            <span class="stat-label">malicious email volume removed — KnowBe4 Defend + Barracuda Gateway Defense</span>
+          </p>
+          <p class="stat stat-blue enter" style="--i:2">
+            <span class="stat-num"><span class="stat-count v5000" aria-hidden="true"></span><span class="stat-real">5,000+</span></span>
+            <span class="stat-label">enterprise risks migrated — zero data-integrity incidents</span>
+          </p>
+          <p class="stat enter" style="--i:3">
+            <span class="stat-num"><span class="stat-count v250" aria-hidden="true"></span><span class="stat-real">250+</span></span>
+            <span class="stat-label">employees trained — simulated phishing campaigns tailored by department</span>
+          </p>
+        </div>
+
+        <!-- F-3 + MC44: contact chips with inline SVG icons, real links -->
+        <div class="contact-row enter" style="--i:4">
+          <a class="chip" href="mailto:benkomatt@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="lbl-full">benkomatt@gmail.com</span><span class="lbl-short">email</span></a>
+          <!-- S-2: phone renders as plain text (matches prod; no tel: href) -->
+          <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.6 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg><span class="k" aria-hidden="true">tel</span> (989) 395-1760</span>
+          <a class="chip" href="https://linkedin.com/in/matthewbenko/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-2.14 3.36-2.56 3.47-.9 4.33 2.06 4.33 4.74zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57z"/></svg><span class="lbl-full">linkedin/in/matthewbenko</span><span class="lbl-short">linkedin</span></a>
+          <a class="chip" href="https://github.com/BenkoMatt" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.91c.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.19 1.9-.86.96-.34 1.93.32 2.19.66.26 1.45.13 2-.4.5-.5.86-2.27.86-2.27.31-1.5 1.72-2.16 1.72-2.2-1.9-.63-3.13-2.6-3.13-4.53 0-2.28 1.3-3.68 2.9-3.68 1.62 0 2.94 1.3 2.94 2.92 0 1.94-.7 3.05-1.86 4.4.6 2.27 2.1 2.75 2.1 2.75.2.28.14.68-.12.9-.28.22-.68.16-.9-.1-.02-.03-1.5-2.2-2.05-4.13-.15-.6-.2-1.2-.2-1.78 0-1.62 1.32-2.93 2.94-2.93s2.94 1.65 2.94 3.68c0 1.93-1.23 3.9-3.13 4.53v2.87c0 .31.21.67.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg><span class="lbl-full">github.com/BenkoMatt</span><span class="lbl-short">github</span></a>
+          <a class="chip" href="https://credly.com/users/matthew-benko" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></svg><span class="lbl-full">credly.com/users/matthew-benko</span><span class="lbl-short">credly</span></a>
+        </div>
+
+        <!-- F-3/F-6 trust line: linked cert names without scrolling -->
+        <p class="hero-trust enter" style="--i:4">
+          <a href="https://credly.com/users/matthew-benko" target="_blank" rel="noopener">CEH</a><span class="sep" aria-hidden="true">·</span><a href="https://www.credly.com/badges/763fa1f0-e537-48fe-9378-2a5444b328ed/public_url" target="_blank" rel="noopener">CompTIA Network+</a><span class="sep" aria-hidden="true">·</span><a href="https://www.credly.com/badges/212c57d4-cdc8-4b40-8a84-a86b68211da7/public_url" target="_blank" rel="noopener">CompTIA A+</a><span class="sep" aria-hidden="true">·</span><a href="https://www.credly.com/badges/410d8f75-0873-4ee1-901f-f73eaf85b299/public_url" target="_blank" rel="noopener">AWS CCP</a><span class="sep" aria-hidden="true">·</span>FCC KF8ACL
+        </p>
+      </div>
+
     </div>
   </header>
 
-  <!-- ──── SUMMARY ──── -->
-  <section id="summary">
-    <div class="section-label">// Summary</div>
-    <p class="summary-text">
-      Security Engineer with hands-on experience across healthcare, energy, and manufacturing environments.
-      Skilled in identity and access management, EDR monitoring, email security, and enterprise risk governance.
-      Proven track record reducing phishing attack surfaces, cutting malicious email volumes, and streamlining security
-      operations through automation. CEH, CompTIA Network+, A+, and AWS CP certified. Master of Science in
-      Information Security &amp; Intelligence.
-    </p>
+  <!-- ══════ §3.1 SUMMARY + cert badge strip ══════ -->
+  <section class="section" id="summary" aria-labelledby="summary-h">
+    <h2 class="sec-cmd reveal" id="summary-h" aria-label="Summary"><span class="sec-num" aria-hidden="true">// 01</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> cat summary.md</h2>
+    <p class="sec-label" aria-hidden="true">summary.md</p>
+    <div class="summary-wrap reveal">
+            <p class="summary-text">
+        <strong>IT Security Engineer cutting attack surface with measured, verifiable results — 80% phishing-surface reduction, 70–90% fewer malicious emails, a 5,000-risk platform migration with zero data-integrity incidents.</strong>
+        Hands-on across manufacturing, energy, and healthcare environments: identity and access management, EDR monitoring, email security, and enterprise risk governance.
+        Ships secure automation in PowerShell and Python. CEH, CompTIA Network+, CompTIA A+, and AWS Certified Cloud Practitioner. Master of Science, Information Security &amp; Intelligence (May 2026).
+      </p>
+    </div>
+    <ul class="badge-strip" aria-label="Verified certifications — quick view">
+      <li><a href="https://credly.com/users/matthew-benko" target="_blank" rel="noopener"><span class="tick" aria-hidden="true">[ok]</span> CEH</a></li>
+      <li><a href="https://www.credly.com/badges/763fa1f0-e537-48fe-9378-2a5444b328ed/public_url" target="_blank" rel="noopener"><span class="tick" aria-hidden="true">[ok]</span> CompTIA Network+</a></li>
+      <li><a href="https://www.credly.com/badges/212c57d4-cdc8-4b40-8a84-a86b68211da7/public_url" target="_blank" rel="noopener"><span class="tick" aria-hidden="true">[ok]</span> CompTIA A+</a></li>
+      <li><a href="https://www.credly.com/badges/410d8f75-0873-4ee1-901f-f73eaf85b299/public_url" target="_blank" rel="noopener"><span class="tick" aria-hidden="true">[ok]</span> AWS Cloud Practitioner</a></li>
+      <li><a href="https://credly.com/users/matthew-benko" target="_blank" rel="noopener"><span class="tick" aria-hidden="true">[ok]</span> FCC Ham Technician</a></li>
+      <li class="more"><a href="#certs">full credentials ↓</a></li>
+    </ul>
   </section>
 
-  <!-- ──── TECHNICAL SKILLS ──── -->
-  <section id="skills">
-    <div class="section-label">// Technical Skills</div>
+  <!-- ══════ §3.2 SKILLS — 6 Boolean clusters (MC18) ══════ -->
+  <section class="section" id="skills" aria-labelledby="skills-h">
+    <h2 class="sec-cmd reveal" id="skills-h" aria-label="Skills"><span class="sec-num" aria-hidden="true">// 02</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> ./skills <span class="flag">--list --grouped</span></h2>
+    <p class="sec-label" aria-hidden="true">capability matrix</p>
     <div class="skill-grid">
-      <span class="skill-tag">Microsoft Entra ID / Azure AD</span>
-      <span class="skill-tag">Active Directory (Server 2019)</span>
-      <span class="skill-tag">Microsoft 365 (Exchange, SharePoint, OneDrive)</span>
-      <span class="skill-tag">Conditional Access</span>
-      <span class="skill-tag">MFA / IAM</span>
-      <span class="skill-tag">ESET Protect EDR</span>
-      <span class="skill-tag">KnowBe4</span>
-      <span class="skill-tag">Barracuda Email Gateway</span>
-      <span class="skill-tag">VLAN Administration</span>
-      <span class="skill-tag">Routing</span>
-      <span class="skill-tag">Python Scripting</span>
-      <span class="skill-tag">Automation</span>
-      <span class="skill-tag">VirusTotal</span>
-      <span class="skill-tag">AnyRun</span>
-      <span class="skill-tag">Forensic Analysis</span>
-      <span class="skill-tag">Network Troubleshooting</span>
-      <span class="skill-tag">CAT 5e/6 Cabling</span>
-      <span class="skill-tag">Risk Management / GRC</span>
-      <span class="skill-tag">Security Awareness Training</span>
-      <span class="skill-tag">Endpoint Deployment</span>
-      <span class="skill-tag">Imaging</span>
-      <span class="skill-tag">Quality Assessment</span>
-      <span class="skill-tag">Audit Support</span>
+      <div class="skill-card reveal">
+        <h3>identity &amp; access management <span class="n">[5]</span></h3>
+        <ul class="skill-list">
+          <li>Microsoft Entra ID / Azure AD</li>
+          <li>Active Directory (Server 2019)</li>
+          <li>Conditional Access</li>
+          <li>MFA / IAM</li>
+          <li>Microsoft 365 (Exchange, SharePoint, OneDrive)</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <h3>endpoint &amp; detection <span class="n">[4]</span></h3>
+        <ul class="skill-list">
+          <li>ESET Protect EDR</li>
+          <li>Endpoint Deployment</li>
+          <li>Imaging</li>
+          <li>Forensic Analysis</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <h3>email security <span class="n">[5]</span></h3>
+        <ul class="skill-list">
+          <li>Barracuda Email Gateway</li>
+          <li>KnowBe4</li>
+          <li>VirusTotal</li>
+          <li>AnyRun</li>
+          <li>Security Awareness Training</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <h3>network infrastructure <span class="n">[4]</span></h3>
+        <ul class="skill-list">
+          <li>VLAN Administration</li>
+          <li>Routing</li>
+          <li>Network Troubleshooting</li>
+          <li>CAT 5e/6 Cabling</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <h3>governance &amp; compliance <span class="n">[3]</span></h3>
+        <ul class="skill-list">
+          <li>Risk Management / GRC</li>
+          <li>Audit Support</li>
+          <li>Quality Assessment</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <h3>scripting &amp; automation <span class="n">[3]</span></h3>
+        <ul class="skill-list">
+          <li>Python Scripting</li>
+          <li>Automation</li>
+          <li>PowerShell</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- ──── PROFESSIONAL EXPERIENCE ──── -->
-  <section id="experience">
-    <div class="section-label">// Professional Experience</div>
-    <div class="timeline">
+  <!-- ══════ §3.3 EXPERIENCE — 4 roles, all 11 role-1 bullets (§10.1) ══════ -->
+  <section class="section" id="experience" aria-labelledby="experience-h">
+    <h2 class="sec-cmd reveal" id="experience-h" aria-label="Experience"><span class="sec-num" aria-hidden="true">// 03</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> tail -f experience.log</h2>
+    <p class="sec-label" aria-hidden="true">ops history — 4 roles</p>
+    <ol class="timeline">
 
-      <div class="timeline-item">
-        <div class="timeline-role">IT Security Engineer</div>
-        <div class="timeline-org">Reed City Group — Reed City, MI</div>
-        <div class="timeline-period">Jan 2025 → Present</div>
-        <ul class="timeline-details">
-          <li>Cut phishing attack surfaces by 80% by deploying Microsoft Entra ID Conditional Access policies enforcing site-wide MFA, geolocking, session re-authentication, and third-party app restrictions</li>
-          <li>Removed malicious email volume by 70–90% through administration of KnowBe4 Defend Email Threat and Barracuda Email Gateway Defense systems</li>
-          <li>Automated AD–KnowBe4 user synchronization, reducing manual compliance tracking by 10+ hours per quarter</li>
-          <li>Orchestrated simulated phishing campaigns tailored by department, training 250+ employees on real-world attack tactics and techniques</li>
-          <li>Administered segregated Active Directory on Windows Server 2019 with role-based access controls aligned to Principle of Least Privilege</li>
-          <li>Deployed and tuned ESET Protect EDR across endpoints for real-time threat detection, containment, and remediation</li>
-          <li>Conducted forensic analysis of suspicious files and URLs using VirusTotal and AnyRun sandbox environments</li>
-          <li>Managed Microsoft 365 suite (Exchange, SharePoint, OneDrive) for 250+ employees; troubleshot Exchange mail flow issues to maintain operational continuity</li>
-          <li>Installed and terminated 2000+ feet of CAT 5e/6 cabling, wireless cameras, and switches; configured VLANs and routing rules to segregate network segments</li>
-          <li>Partnered with Pathfinders IT Managed Service Provider on quarterly security audits, ensuring regulatory compliance and risk remediation</li>
-          <li>Delivered daily technical support for endpoints, mobile devices, printers, network shares, and file access, sustaining employee productivity across the manufacturing floor</li>
+            <li class="tl-item">
+        <div class="tl-head">
+          <h3>IT Security Engineer</h3>
+          <p class="tl-period">Jan 2025 → Present</p>
+        </div>
+        <p class="tl-org">Reed City Group — Reed City, MI</p>
+        <ul class="tl-bullets">
+          <li>Cut phishing attack surfaces by <strong class="num">80%</strong> by deploying Microsoft Entra ID Conditional Access policies enforcing site-wide MFA, geolocking, session re-authentication, and third-party app restrictions</li>
+          <li>Removed malicious email volume by <strong class="num">70–90%</strong> through administration of KnowBe4 Defend Email Threat and Barracuda Email Gateway Defense systems</li>
+          <li>Orchestrated simulated phishing campaigns tailored by department, training <strong class="num">250+ employees</strong> on real-world attack tactics and techniques</li>
+          <li>Automated AD–KnowBe4 user synchronization, reducing manual compliance tracking by <strong class="num">10+ hours</strong> per quarter</li>
+          <li>Installed and terminated <strong class="num">2,000+ feet</strong> of CAT 5e/6 cabling, wireless cameras, and switches; configured VLANs and routing rules to segregate network segments</li>
+          <li>Drove migration of <strong class="num">~5,000</strong> IT and infrastructure risks with zero data-integrity incidents <span class="xref">&nbsp;→ detail under Consumers Energy, 2024</span></li>
         </ul>
-      </div>
+        <p class="tl-aside">Also: administered segregated Active Directory on Windows Server 2019 with role-based access controls aligned to Principle of Least Privilege · deployed and tuned ESET Protect EDR across endpoints for real-time threat detection, containment, and remediation · conducted forensic analysis of suspicious files and URLs using VirusTotal and AnyRun sandbox environments · managed Microsoft 365 (Exchange, SharePoint, OneDrive) for <strong class="num">250+ employees</strong> with Exchange mail-flow troubleshooting · partnered with Pathfinders IT Managed Service Provider on quarterly security audits · delivered daily technical support across endpoints, mobile, printers, network shares, and file access on the manufacturing floor.</p>
+      </li>
 
-      <div class="timeline-item">
-        <div class="timeline-role">CX&amp;T Security Intern — GRC Team</div>
-        <div class="timeline-org">Consumers Energy — Jackson, MI</div>
-        <div class="timeline-period">May 2024 → Jan 2025</div>
-        <ul class="timeline-details">
-          <li>Drove transition of enterprise risk management systems, migrating ~5,000 IT and infrastructure risks with zero data integrity incidents</li>
+      <li class="tl-item">
+        <div class="tl-head">
+          <h3>CX&amp;T Security Intern — GRC Team</h3>
+          <p class="tl-period">May 2024 → Jan 2025</p>
+        </div>
+        <p class="tl-org">Consumers Energy — Jackson, MI</p>
+        <ul class="tl-bullets">
+          <li>Drove transition of enterprise risk management systems, migrating <strong class="num">~5,000 IT and infrastructure risks</strong> with zero data integrity incidents</li>
           <li>Partnered with networking, systems, and application teams to identify and document risks during project planning, surfacing gaps before deployment</li>
           <li>Gained hands-on exposure to utility-scale IT environments supporting 24/7 uptime and strict regulatory standards</li>
         </ul>
-      </div>
+      </li>
 
-      <div class="timeline-item">
-        <div class="timeline-role">Senior Information Technology Extern</div>
-        <div class="timeline-org">Hurley Medical Center — Flint, MI</div>
-        <div class="timeline-period">May 2022 → Aug 2022</div>
-        <ul class="timeline-details">
-          <li>Resolved 300+ IT service tickets in a high-availability healthcare environment, maintaining clinician uptime and minimizing disruption to patient care</li>
-          <li>Imaged, configured, and deployed 20+ computers with full provisioning from OS installation through domain join and user handoff</li>
-          <li>Mentored 2 incoming IT externs on ticket workflows, troubleshooting procedures, and IT best practices, accelerating their time-to-productivity</li>
-          <li>Coordinated project deliverables across networking, systems administration, biomed, database management, and application analysis teams</li>
-          <li>Presented project progress and operational updates to the IT team during regular meetings, ensuring stakeholder alignment</li>
+      <li class="tl-item">
+        <div class="tl-head">
+          <h3>Senior Information Technology Extern</h3>
+          <p class="tl-period">May 2022 → Aug 2022</p>
+        </div>
+        <p class="tl-org">Hurley Medical Center — Flint, MI</p>
+        <ul class="tl-bullets">
+          <li>Resolved <strong class="num">300+ IT service tickets</strong> in a high-availability healthcare environment, maintaining clinician uptime and minimizing disruption to patient care</li>
+          <li>Imaged, configured, and deployed <strong class="num">20+ computers</strong> with full provisioning from OS installation through domain join and user handoff</li>
+          <li>Mentored <strong class="num">2 incoming IT externs</strong> on ticket workflows, troubleshooting procedures, and IT best practices, accelerating their time-to-productivity</li>
         </ul>
-      </div>
+        <p class="tl-aside">Also: coordinated project deliverables across networking, systems administration, biomed, database management, and application analysis teams · presented project progress and operational updates to the IT team during regular meetings</p>
+      </li>
 
-      <div class="timeline-item">
-        <div class="timeline-role">Information Technology Extern</div>
-        <div class="timeline-org">Hurley Medical Center — Flint, MI</div>
-        <div class="timeline-period">Jun 2021 → Aug 2021</div>
-        <ul class="timeline-details">
+      <li class="tl-item">
+        <div class="tl-head">
+          <h3>Information Technology Extern</h3>
+          <p class="tl-period">Jun 2021 → Aug 2021</p>
+        </div>
+        <p class="tl-org">Hurley Medical Center — Flint, MI</p>
+        <ul class="tl-bullets">
           <li>Delivered first-level support via Ticket+, resolving Wi-Fi connectivity, switch port, workstation, and hardware issues in a 24/7 healthcare environment</li>
           <li>Collaborated with cross-functional IT teams spanning networking, systems administration, biomed, database management, and application analysis</li>
           <li>Participated in quality assessment and continuous improvement initiatives, contributing to higher service-desk efficiency metrics</li>
         </ul>
-      </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ══════ §3.4 PROJECTS — 3 case-study tiles (§9) ══════ -->
+  <section class="section" id="projects" aria-labelledby="projects-h">
+    <h2 class="sec-cmd reveal" id="projects-h" aria-label="Projects"><span class="sec-num" aria-hidden="true">// 04</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> ls ~/projects <span class="flag">--case-studies</span></h2>
+    <p class="sec-label" aria-hidden="true">case files — problem · approach · result</p>
+    <div class="tile-stack-cases">
+
+            <article class="tile tile-accent-green">
+        <div class="term">
+          <div class="term-bar" aria-hidden="true">
+            <span class="term-dots"><i></i><i></i><i></i></span>
+            <span class="term-title">~/projects/vps-security-hardening — case study</span>
+            <span class="tile-status"><i></i>public</span>
+          </div>
+          <div class="term-body">
+            <h3>VPS Security Hardening — Automated Server Lockdown</h3>
+            <div class="tile-res">
+              <span class="tile-res-val">0</span>
+              <span class="tile-res-lbl">public inbound firewall rules — every allow rule scoped to the private mesh; public SSH disabled</span>
+            </div>
+            <dl class="case">
+              <div class="case-row">
+                <dt>problem</dt>
+                <dd>A personal cloud VPS running an AI gateway and LLM stack sat on the public internet with a default posture: public SSH, exposed services, no firewall policy. A single misconfigured daemon away from a compromise.</dd>
+              </div>
+              <div class="case-row">
+                <dt>approach</dt>
+                <dd>Rebuilt the host around deny-by-default: UFW with every allow rule scoped exclusively to the mesh-VPN interface, public SSH listeners disabled, SSH hardened (MaxAuthTries, idle timeouts, AllowUsers restrictions), and fail2ban progressive-ban policies tuned. Daily config backups automated via cron with GitHub push for change tracking and disaster recovery.</dd>
+              </div>
+              <div class="case-row">
+                <dt>result</dt>
+                <dd><span class="r">0 public inbound firewall rules</span> — every allow rule scoped to the private mesh, public SSH disabled. The hardened state is live and verifiable in the public report: before/after port scans, full service inventory, and rollback procedures.</dd>
+              </div>
+            </dl>
+            <p class="tile-friction"><span class="fl-label">constraint:</span> locking SSH behind the mesh meant giving up the convenience of reaching the box from any network — the fix was accepting that friction as the design, not engineering around it.</p>
+            <p class="tile-stack"><span class="k">stack:</span> UFW · fail2ban · Tailscale · Ubuntu 24.04</p>
+            <a class="tile-link" href="https://github.com/BenkoMatt/VPS-Security-Hardening-Report" target="_blank" rel="noopener">open github.com/BenkoMatt/VPS-Security-Hardening-Report <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile tile-accent-amber">
+        <div class="term">
+          <div class="term-bar" aria-hidden="true">
+            <span class="term-dots"><i></i><i></i><i></i></span>
+            <span class="term-title">~/projects/frameworks-guide — case study</span>
+            <span class="tile-status"><i></i>public</span>
+          </div>
+          <div class="term-body">
+            <h3>Cybersecurity Frameworks Guide</h3>
+            <div class="tile-res">
+              <span class="tile-res-val">4 frameworks</span>
+              <span class="tile-res-lbl">one public reference guide — used by peers studying for security certifications</span>
+            </div>
+            <dl class="case">
+              <div class="case-row">
+                <dt>problem</dt>
+                <dd>NIST CSF, ISO 27001, CIS Controls, and MITRE ATT&amp;CK each assume prior fluency; newcomers studying for security certifications face four dense, overlapping frameworks with no Rosetta stone.</dd>
+              </div>
+              <div class="case-row">
+                <dt>approach</dt>
+                <dd>Authored a public reference guide mapping the four frameworks against each other — what each controls, where they overlap, and how they slot into a working security program.</dd>
+              </div>
+              <div class="case-row">
+                <dt>result</dt>
+                <dd><span class="r">A public reference guide used by peers studying for security certifications.</span></dd>
+              </div>
+            </dl>
+            <p class="tile-friction"><span class="fl-label">constraint:</span> published knowing the frameworks will drift — keeping a mapping current is a maintenance commitment, not a one-time write.</p>
+            <p class="tile-stack"><span class="k">stack:</span> Technical Writing · NIST CSF · ISO 27001 · CIS Controls · MITRE ATT&amp;CK</p>
+            <a class="tile-link" href="https://github.com/BenkoMatt/Claw-Framework-Report" target="_blank" rel="noopener">open github.com/BenkoMatt/Claw-Framework-Report <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile tile-accent-blue">
+        <div class="term">
+          <div class="term-bar" aria-hidden="true">
+            <span class="term-dots"><i></i><i></i><i></i></span>
+            <span class="term-title">~/projects/ad-old-objects-audit — case study</span>
+            <span class="tile-status"><i></i>public</span>
+          </div>
+          <div class="term-body">
+            <h3>Active Directory Cleanup Automation</h3>
+            <div class="tile-res">
+              <span class="tile-res-val">repeatable</span>
+              <span class="tile-res-lbl">stale AD objects surfaced and audited on a repeatable schedule</span>
+            </div>
+            <dl class="case">
+              <div class="case-row">
+                <dt>problem</dt>
+                <dd>Stale AD objects — departed users, decommissioned computers — accumulate silently and widen the attack surface; at production scale the audit is unmanageable by hand.</dd>
+              </div>
+              <div class="case-row">
+                <dt>approach</dt>
+                <dd>Built PowerShell scripts to audit stale AD users and computers and generate resulting reports — designed to run on a repeatable schedule, not as a one-off cleanup.</dd>
+              </div>
+              <div class="case-row">
+                <dt>result</dt>
+                <dd><span class="r">Stale AD objects surfaced and audited on a repeatable schedule.</span></dd>
+              </div>
+            </dl>
+            <p class="tile-friction"><span class="fl-label">constraint:</span> the script surfaces candidates for cleanup; disabling or deleting accounts still gets a human review — automation narrows the queue, it doesn't own the decision.</p>
+            <p class="tile-stack"><span class="k">stack:</span> PowerShell · Active Directory · Reporting</p>
+            <a class="tile-link" href="https://github.com/BenkoMatt/AD-OldObjects-Audit" target="_blank" rel="noopener">open github.com/BenkoMatt/AD-OldObjects-Audit <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
 
     </div>
   </section>
 
-  <!-- ──── PROJECTS ──── -->
-  <section id="projects">
-    <div class="section-label">// Projects</div>
-
-    <div class="project-card">
-      <h3>VPS Security Hardening — Automated Server Lockdown</h3>
-      <a class="project-link" href="https://github.com/BenkoMatt/VPS-Security-Hardening-Report" target="_blank" rel="noopener">github.com/BenkoMatt/VPS-Security-Hardening-Report</a>
-      <ul>
-        <li>Performed end-to-end security hardening of a cloud VPS running an AI gateway and LLM stack, reducing the public attack surface to zero by restricting all services to a mesh VPN and disabling public SSH listeners</li>
-        <li>Configured UFW firewall with deny-by-default posture and service-specific allow rules scoped exclusively to the VPN interface</li>
-        <li>Hardened SSH via MaxAuthTries, idle timeouts, AllowUsers restrictions, and aggressive fail2ban progressive-ban policies</li>
-        <li>Documented the full hardening lifecycle in a public security report including before/after port scans, service inventory, and rollback procedures</li>
-        <li>Automated daily config backups via cron jobs with GitHub push, ensuring disaster recovery and change tracking</li>
-      </ul>
+  <!-- ══════ §3.5 CERT WALL — D3 badge cards, live-verified (§10.3) ══════ -->
+  <section class="section" id="certs" aria-labelledby="certs-h">
+    <h2 class="sec-cmd reveal" id="certs-h" aria-label="Certs"><span class="sec-num" aria-hidden="true">// 05</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> openssl verify certs/*</h2>
+    <p class="sec-label" aria-hidden="true">trust anchor — live verification links</p>
+    <div class="certwall">
+      <a class="badge-card" href="https://www.credly.com/badges/212c57d4-cdc8-4b40-8a84-a86b68211da7/public_url" target="_blank" rel="noopener">
+        <span class="b-status"><span class="tick" aria-hidden="true"></span>Verified</span>
+        <span class="b-name">CompTIA A+ ce</span>
+        <span class="b-id">ID D72JQJ6YCME4QGCS</span>
+        <span class="b-verify">verify on Credly →</span>
+      </a>
+      <a class="badge-card" href="https://www.credly.com/badges/763fa1f0-e537-48fe-9378-2a5444b328ed/public_url" target="_blank" rel="noopener">
+        <span class="b-status"><span class="tick" aria-hidden="true"></span>Verified</span>
+        <span class="b-name">CompTIA Network+ ce</span>
+        <span class="b-id">ID YS27STN64806HFSJ</span>
+        <span class="b-verify">verify on Credly →</span>
+      </a>
+      <a class="badge-card" href="https://www.credly.com/badges/410d8f75-0873-4ee1-901f-f73eaf85b299/public_url" target="_blank" rel="noopener">
+        <span class="b-status"><span class="tick" aria-hidden="true"></span>Verified</span>
+        <span class="b-name">AWS Certified Cloud Practitioner</span>
+        <span class="b-id">ID 3a040b5349a3498686d2e38b5e66b9bc</span>
+        <span class="b-verify">verify on Credly →</span>
+      </a>
+      <div class="badge-card">
+        <span class="b-status"><span class="tick" aria-hidden="true"></span>Verified</span>
+        <span class="b-name">EC-Council CEH</span>
+        <span class="b-id">ID ECC4916837250</span>
+        <span class="b-verify">verify via EC-Council — ID on request</span>
+      </div>
+      <div class="badge-card">
+        <span class="b-status"><span class="tick" aria-hidden="true"></span>Licensed</span>
+        <span class="b-name">FCC Amateur Radio Technician</span>
+        <span class="b-id">Call sign KF8ACL</span>
+      </div>
+      <div class="badge-card">
+        <span class="b-status"><span class="tick" aria-hidden="true"></span>Certified</span>
+        <span class="b-name">American Red Cross Adult First Aid/CPR/AED</span>
+        <span class="b-id">ID 01L9OOG</span>
+      </div>
     </div>
-
-    <div class="project-card">
-      <h3>Cybersecurity Frameworks Guide</h3>
-      <a class="project-link" href="https://github.com/BenkoMatt/Claw-Framework-Report" target="_blank" rel="noopener">github.com/BenkoMatt/Claw-Framework-Report</a>
-      <ul>
-        <li>Authored a public reference guide covering NIST CSF, ISO 27001, CIS Controls, and MITRE ATT&amp;CK, used by peers studying for security certifications</li>
-      </ul>
-    </div>
-
-    <div class="project-card">
-      <h3>Active Directory Cleanup Automation</h3>
-      <a class="project-link" href="https://github.com/BenkoMatt/AD-OldObjects-Audit" target="_blank" rel="noopener">github.com/BenkoMatt/AD-OldObjects-Audit</a>
-      <ul>
-        <li>Built PowerShell scripts to audit stale AD users and computers and generate resulting reports</li>
-      </ul>
-    </div>
+    <ul class="cert-other">
+      <li><span class="hl">Michigan CPL Holder</span> — 1464863G</li>
+      <li><span class="hl">Zehnder's Employee of the Month</span> (July 2023)</li>
+      <li><span class="hl">Ferris State University President's Scholarship</span></li>
+    </ul>
   </section>
 
-  <!-- ──── CERTIFICATIONS ──── -->
-  <section id="certs">
-    <div class="section-label">// Certifications, Licenses &amp; Awards</div>
-    <div class="cert-grid">
-      <div class="cert-item">
-        <span class="cert-name">EC-Council CEH</span>
-        <span class="cert-id">ECC4916837250</span>
-      </div>
-      <div class="cert-item">
-        <span class="cert-name">CompTIA Network+ ce</span>
-        <span class="cert-id">YS27STN64806HFSJ</span>
-      </div>
-      <div class="cert-item">
-        <span class="cert-name">CompTIA A+ ce</span>
-        <span class="cert-id">D72JQJ6YCME4QGCS</span>
-      </div>
-      <div class="cert-item">
-        <span class="cert-name">AWS Certified Cloud Practitioner</span>
-        <span class="cert-id">3a040b5349a3498686d2e38b5e66b9bc</span>
-      </div>
-      <div class="cert-item">
-        <span class="cert-name">FCC HA Technician</span>
-        <span class="cert-id">KF8ACL</span>
-      </div>
-      <div class="cert-item">
-        <span class="cert-name">American Red Cross Adult First Aid/CPR/AED</span>
-        <span class="cert-id">01L9OOG</span>
-      </div>
+  <!-- ══════ §3.6 THE AGENT BEHIND THIS PAGE (§10.4) ══════ -->
+  <section class="section" id="agent" aria-labelledby="agent-h">
+    <h2 class="sec-cmd reveal" id="agent-h" aria-label="Agent"><span class="sec-num" aria-hidden="true">// 06</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> ps aux <span class="flag">| grep caddy</span></h2>
+    <p class="sec-label" aria-hidden="true">the agent behind this page</p>
+    <p class="agent-intro reveal">
+      This site was designed, built, and QA'd by <strong>Caddy</strong> — a code-specialist AI agent running inside
+      a multi-agent Hermes system on a private VPS. The rebuild you are reading ran as an
+      <strong>adversarial workflow</strong>: parallel research agents, three competing design candidates,
+      independent judge and refuter agents, and a human deploy gate. Every number in this section was pulled
+      from the live system by the same fleet that built the page — the board queries, git history, and
+      firewall state are the sources, recorded per fact. If the board counts shift, the agents recount at
+      integration: the rebuild counted <strong>24 live workflow cards</strong> across 6 phases on 2026-09-16.
+    </p>
+    <div class="agent-stats">
+      <p class="agent-stat reveal"><b>7</b><span>specialized agent profiles — role separation on one model fleet, least-privilege for agents</span></p>
+      <p class="agent-stat reveal"><b>145</b><span>documented skill modules across 38 categories</span></p>
+      <p class="agent-stat reveal"><b>23</b><span>scheduled operational jobs — security snapshots, watchers, reports</span></p>
+      <p class="agent-stat reveal"><b>7.8 GiB</b><span>RAM / 4 vCPU on the hardened VPS this runs on</span></p>
+      <p class="agent-stat reveal"><b>0</b><span>public inbound firewall rules — deny-by-default, fail2ban, mesh-only admin</span></p>
+      <p class="agent-stat reveal"><b>9/9</b><span>site commits authored by the agent — including an 8-commit favicon-iteration honesty record</span></p>
     </div>
-    <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
-      <div class="cert-other">Michigan CPL Holder — 1464863G</div>
-      <div class="cert-other">Zehnder's Employee of the Month (July 2023)</div>
-      <div class="cert-other">Ferris State University President's Scholarship</div>
-    </div>
+
+    <details class="deep">
+      <summary><span class="mark" aria-hidden="true"></span> Deep dive: the full architecture, and how this page was built</summary>
+      <div class="deep-body">
+        <h3>// host &amp; perimeter</h3>
+        <ul>
+          <li>Everything runs on a single Contabo VPS (Ubuntu 24.04 LTS, 4 vCPU, 7.8 GiB RAM) inside a default-deny perimeter: UFW allows inbound only on the Tailscale mesh interface, fail2ban guards SSH, and the public site itself is static — served by GitHub Pages, with no app server exposed to exploit</li>
+          <li>This site itself ships as static files — no server-side code to exploit</li>
+        </ul>
+        <h3>// model fleet</h3>
+        <ul>
+          <li>A single open-weights GLM model (glm-5.3-flash) served via Ollama Cloud, uniformly deployed across seven agent profiles: orchestration, operations, research, review, security, webdev, and work</li>
+          <li>Differentiation comes from role separation and tooling — least-privilege for AI agents, like service accounts: reviewers are structurally independent from builders</li>
+        </ul>
+        <h3>// memory &amp; orchestration</h3>
+        <ul>
+          <li>Honcho provides hybrid persistent memory — a compact peer card, semantic search over full message history, and a synthesized-reasoning layer, with hard character budgets that force curation over hoarding</li>
+          <li>A SQLite kanban board runs the task graph: dependency-gated cards, a dispatcher that promotes child tasks when parents complete, a 4-hour per-card cap and a 6-agent concurrency ceiling, and stale-run requeueing</li>
+          <li>Adversarial convergence: every QA claim must be atomic and located (file:line), independent refuter agents try to break each claim, and only claims that survive refutation get fixed — capped at three rounds</li>
+        </ul>
+
+        <div class="diagram-wrap">
+          <div id="caddy-arch" class="b3-arch">
+<svg class="b3-arch-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 260" width="1120" height="260" role="img" aria-label="Caddy agent architecture — internet and tailnet edge to kanban dispatcher to 7 glm-5.3-flash profiles to 145 skills plus Honcho memory to 23 cron jobs to GitHub Pages deploy to this site. Counts pulled live 2026-09-16."><title>Caddy agent architecture</title>
+<rect class="b3-bg" x="0" y="0" width="1120" height="260" fill="#080c10"/>
+<rect class="b3-node" style="--wi:0" x="20" y="88" width="134" height="96" rx="8" stroke-dasharray="5 4"/>
+<text x="87.0" y="132" class="b3-t" fill="#e8eff6" text-anchor="middle">internet /</text>
+<text x="87.0" y="150" class="b3-t" fill="#e8eff6" text-anchor="middle">tailnet edge</text>
+<text x="87.0" y="166" fill="#95abbf" text-anchor="middle">0 public inbound</text>
+<rect class="b3-node" style="--wi:1" x="180" y="88" width="134" height="96" rx="8"/>
+<text x="247.0" y="132" class="b3-t" fill="#e8eff6" text-anchor="middle">kanban</text>
+<text x="247.0" y="150" class="b3-t" fill="#e8eff6" text-anchor="middle">dispatcher</text>
+<text x="247.0" y="166" fill="#95abbf" text-anchor="middle">gateway · 24 cards</text>
+<rect class="b3-node" style="--wi:2" x="340" y="88" width="134" height="96" rx="8"/>
+<text x="407.0" y="130" class="b3-t" fill="#e8eff6" text-anchor="middle">7 profiles</text>
+<text x="407.0" y="166" fill="#95abbf" text-anchor="middle">glm-5.3-flash</text>
+<rect class="b3-node" style="--wi:3" x="500" y="88" width="134" height="96" rx="8"/>
+<rect x="508" y="98" width="118" height="36" rx="5" fill="#0a0f15"/>
+<text x="567.0" y="114" class="b3-t" fill="#e8eff6" text-anchor="middle">145 skills</text>
+<text x="567.0" y="128" fill="#95abbf" text-anchor="middle">38 categories</text>
+<rect x="508" y="140" width="118" height="36" rx="5" fill="#0a0f15"/>
+<text x="567.0" y="156" class="b3-t" fill="#e8eff6" text-anchor="middle">honcho memory</text>
+<text x="567.0" y="170" fill="#95abbf" text-anchor="middle">hybrid mode</text>
+<rect class="b3-node" style="--wi:4" x="660" y="88" width="134" height="96" rx="8"/>
+<text x="727.0" y="130" class="b3-t" fill="#e8eff6" text-anchor="middle">23 cron jobs</text>
+<text x="727.0" y="166" fill="#95abbf" text-anchor="middle">scheduled ops</text>
+<rect class="b3-node" style="--wi:5" x="820" y="88" width="134" height="96" rx="8"/>
+<text x="887.0" y="132" class="b3-t" fill="#e8eff6" text-anchor="middle">github pages</text>
+<text x="887.0" y="150" class="b3-t" fill="#e8eff6" text-anchor="middle">deploy</text>
+<text x="887.0" y="166" fill="#95abbf" text-anchor="middle">static hosting</text>
+<rect class="b3-node" style="--wi:6" x="980" y="88" width="134" height="96" rx="8" fill="#0d131a" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="1047.0" y="130" class="b3-t" fill="#e8eff6" text-anchor="middle">this site</text>
+<text x="1047.0" y="166" fill="#95abbf" text-anchor="middle">1 file · 0 js</text>
+<line class="b3-wire" style="--len:16;--wi:0" x1="156" y1="136" x2="172" y2="136" stroke="#5d768f"/><line class="b3-dots" style="--wi:0" x1="156" y1="136" x2="172" y2="136" stroke="#7ce9ae"/><polyline class="b3-head" points="165,130 171,136 165,142" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:16;--wi:1" x1="316" y1="136" x2="332" y2="136" stroke="#5d768f"/><line class="b3-dots" style="--wi:1" x1="316" y1="136" x2="332" y2="136" stroke="#7ce9ae"/><polyline class="b3-head" points="325,130 331,136 325,142" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:16;--wi:2" x1="476" y1="136" x2="492" y2="136" stroke="#5d768f"/><line class="b3-dots" style="--wi:2" x1="476" y1="136" x2="492" y2="136" stroke="#7ce9ae"/><polyline class="b3-head" points="485,130 491,136 485,142" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:16;--wi:3" x1="636" y1="136" x2="652" y2="136" stroke="#5d768f"/><line class="b3-dots" style="--wi:3" x1="636" y1="136" x2="652" y2="136" stroke="#7ce9ae"/><polyline class="b3-head" points="645,130 651,136 645,142" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:16;--wi:4" x1="796" y1="136" x2="812" y2="136" stroke="#5d768f"/><line class="b3-dots" style="--wi:4" x1="796" y1="136" x2="812" y2="136" stroke="#7ce9ae"/><polyline class="b3-head" points="805,130 811,136 805,142" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:16;--wi:5" x1="956" y1="136" x2="972" y2="136" stroke="#5d768f"/><line class="b3-dots" style="--wi:5" x1="956" y1="136" x2="972" y2="136" stroke="#7ce9ae"/><polyline class="b3-head" points="965,130 971,136 965,142" stroke="#5d768f" fill="none"/>
+</svg>
+<svg class="b3-arch-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 343 690" width="343" height="690" role="img" aria-label="Caddy agent architecture (stacked) — Same chain, stacked for narrow screens: edge, dispatcher, profiles, skills and memory, cron, deploy, this site."><title>Caddy agent architecture (stacked)</title>
+<rect class="b3-bg" x="0" y="0" width="343" height="690" fill="#080c10"/>
+<rect class="b3-node" style="--wi:0" x="16" y="16" width="311" height="64" rx="8" stroke-dasharray="5 4"/>
+<text x="171.5" y="45" class="b3-t" fill="#e8eff6" text-anchor="middle">internet / tailnet edge</text>
+<text x="171.5" y="65" fill="#95abbf" text-anchor="middle">0 public inbound rules</text>
+<rect class="b3-node" style="--wi:1" x="16" y="108" width="311" height="64" rx="8"/>
+<text x="171.5" y="137" class="b3-t" fill="#e8eff6" text-anchor="middle">kanban dispatcher</text>
+<text x="171.5" y="157" fill="#95abbf" text-anchor="middle">gateway · 24 cards</text>
+<rect class="b3-node" style="--wi:2" x="16" y="200" width="311" height="64" rx="8"/>
+<text x="171.5" y="229" class="b3-t" fill="#e8eff6" text-anchor="middle">7 profiles</text>
+<text x="171.5" y="249" fill="#95abbf" text-anchor="middle">glm-5.3-flash</text>
+<rect class="b3-node" style="--wi:3" x="16" y="292" width="311" height="64" rx="8"/>
+<text x="171.5" y="321" class="b3-t" fill="#e8eff6" text-anchor="middle">145 skills · honcho memory</text>
+<text x="171.5" y="341" fill="#95abbf" text-anchor="middle">38 categories · hybrid</text>
+<rect class="b3-node" style="--wi:4" x="16" y="384" width="311" height="64" rx="8"/>
+<text x="171.5" y="413" class="b3-t" fill="#e8eff6" text-anchor="middle">23 cron jobs</text>
+<text x="171.5" y="433" fill="#95abbf" text-anchor="middle">scheduled ops</text>
+<rect class="b3-node" style="--wi:5" x="16" y="476" width="311" height="64" rx="8"/>
+<text x="171.5" y="505" class="b3-t" fill="#e8eff6" text-anchor="middle">github pages deploy</text>
+<text x="171.5" y="525" fill="#95abbf" text-anchor="middle">static hosting</text>
+<rect class="b3-node" style="--wi:6" x="16" y="568" width="311" height="64" rx="8" fill="#0d131a" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="171.5" y="597" class="b3-t" fill="#e8eff6" text-anchor="middle">this site</text>
+<text x="171.5" y="617" fill="#95abbf" text-anchor="middle">single file · no js</text>
+<line class="b3-wire" style="--len:18;--wi:0" x1="180" y1="82" x2="180" y2="100" stroke="#5d768f"/><line class="b3-dots" style="--wi:0" x1="180" y1="82" x2="180" y2="100" stroke="#7ce9ae"/><polyline class="b3-head" points="174,93 180,99 186,93" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:18;--wi:1" x1="180" y1="174" x2="180" y2="192" stroke="#5d768f"/><line class="b3-dots" style="--wi:1" x1="180" y1="174" x2="180" y2="192" stroke="#7ce9ae"/><polyline class="b3-head" points="174,185 180,191 186,185" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:18;--wi:2" x1="180" y1="266" x2="180" y2="284" stroke="#5d768f"/><line class="b3-dots" style="--wi:2" x1="180" y1="266" x2="180" y2="284" stroke="#7ce9ae"/><polyline class="b3-head" points="174,277 180,283 186,277" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:18;--wi:3" x1="180" y1="358" x2="180" y2="376" stroke="#5d768f"/><line class="b3-dots" style="--wi:3" x1="180" y1="358" x2="180" y2="376" stroke="#7ce9ae"/><polyline class="b3-head" points="174,369 180,375 186,369" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:18;--wi:4" x1="180" y1="450" x2="180" y2="468" stroke="#5d768f"/><line class="b3-dots" style="--wi:4" x1="180" y1="450" x2="180" y2="468" stroke="#7ce9ae"/><polyline class="b3-head" points="174,461 180,467 186,461" stroke="#5d768f" fill="none"/>
+<line class="b3-wire" style="--len:18;--wi:5" x1="180" y1="542" x2="180" y2="560" stroke="#5d768f"/><line class="b3-dots" style="--wi:5" x1="180" y1="542" x2="180" y2="560" stroke="#7ce9ae"/><polyline class="b3-head" points="174,553 180,559 186,553" stroke="#5d768f" fill="none"/>
+</svg>
+<p class="b3-caption">counts pulled live from the running system · 2026-09-16</p>
+          </div>
+          <p class="diagram-note">Caddy runs on a Contabo VPS behind a Tailscale-only edge (zero public inbound rules). A kanban dispatcher schedules 24 live workflow cards across 7 glm-5.3-flash agent profiles, drawing on 145 skills (38 categories) and Honcho hybrid memory, with 23 cron jobs automating operations; pushes deploy through GitHub Pages to this site. (Full prose equivalent of the diagram above — same chain, node for node.)</p>
+        </div>
+
+        <div class="how-built">
+          <h3>// how this site was built — this workflow's real numbers</h3>
+          <ul>
+            <li><b>24</b> live kanban cards in a single task graph across <b>6</b> phases — reconcile &amp; baseline → parallel research → adversarial design convergence → build → adversarial QA convergence → deploy gate</li>
+            <li><b>3</b> independent candidate designs built blind, in parallel, from three different creative briefs (58.4 / 48.2 / 58.7 KiB), scored by <b>3</b> adversarial judges (reviewer, security, research lenses) — <b>32</b> evidence files, <b>15</b> independently recomputed contrast pairs</li>
+            <li>Adversarial convergence throughout: every finding must be atomic and located (file:line); independent refuter agents try to break each claim; only claims that survive refutation get acted on — capped at <b>3</b> rounds. This run: <b>2</b> refutation rounds (design-judge, then QA-hunters with 2 independent refuters)</li>
+            <li><b>5</b> agent profiles engaged (webdev builders ×3, reviewer / security / research judges, daily synthesis) — all on one open-weights GLM model via Ollama Cloud; differentiation comes from tooling and role separation, not a "smarter" model per role</li>
+            <li><b>4 h</b> per-card hard cap · 6 concurrent workers max · human deploy gate never waived</li>
+            <li><b>Honesty records kept:</b> the previous site's favicon went through 8 small, dated, reversible commits (emoji → recenter → revert → satellite) — one visual change per commit; the record stands in the public git history</li>
+          </ul>
+        </div>
+
+        <h3>// honesty record</h3>
+        <ul>
+          <li>All 9 commits in this site's repository are authored by Caddy — including 8 favicon-iteration commits in a single day: small, dated, reversible changes, exactly how careful engineers work</li>
+          <li>Production deploys are never autonomous: the build blocks until the owner approves</li>
+        </ul>
+      </div>
+    </details>
   </section>
 
-  <!-- ──── EDUCATION ──── -->
-  <section id="education">
-    <div class="section-label">// Education</div>
-    <div class="edu-block">
-      <div class="edu-degree">Master of Science — Information Security &amp; Intelligence</div>
-      <div class="edu-school">Ferris State University — Big Rapids, MI</div>
-      <div class="edu-meta">May 2026</div>
+  <!-- ══════ §3.7 EDUCATION ══════ -->
+  <section class="section" id="education" aria-labelledby="education-h">
+    <h2 class="sec-cmd reveal" id="education-h" aria-label="Education"><span class="sec-num" aria-hidden="true">// 07</span><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> cat education.json</h2>
+    <p class="sec-label" aria-hidden="true">credentials</p>
+    <div class="edu-block reveal">
+      <h3 class="edu-degree">Master of Science — Information Security &amp; Intelligence</h3>
+      <p class="edu-school">Ferris State University — Big Rapids, MI</p>
+      <p class="edu-meta">May 2026</p>
     </div>
-    <div class="edu-block">
-      <div class="edu-degree">Bachelor of Science — Information Security &amp; Intelligence</div>
-      <div class="edu-school">Ferris State University — Big Rapids, MI</div>
-      <div class="edu-meta">December 2024</div>
-      <div class="edu-detail">
+    <div class="edu-block reveal">
+      <h3 class="edu-degree">Bachelor of Science — Information Security &amp; Intelligence</h3>
+      <p class="edu-school">Ferris State University — Big Rapids, MI</p>
+      <p class="edu-meta">December 2024</p>
+      <p class="edu-detail">
         Postgraduate Certificate: Business Intelligence / Incident Response / Information Systems Assurance, Strategy, &amp; Governance<br>
         Minor: Artificial Intelligence &amp; Penetration Testing
-      </div>
+      </p>
     </div>
   </section>
 
-</div>
+</main>
 
 <footer>
   <div class="container">
-    <p>Matthew Benko &mdash; <a href="mailto:benkomatt@gmail.com">benkomatt@gmail.com</a> &mdash; <a href="https://github.com/BenkoMatt" target="_blank" rel="noopener">github.com/BenkoMatt</a></p>
-    <p style="margin-top: 0.35rem; color: var(--text-muted);">Built from resume v3 &middot; 2026</p>
+    <p class="foot-cmd"><span class="prompt"><span class="user">matt@benko</span>:/portfolio$</span> <span class="exit">exit 0</span> — connection to host closed.</p>
+    <div class="footer-links">
+      <a href="mailto:benkomatt@gmail.com">benkomatt@gmail.com</a>
+      <a href="https://linkedin.com/in/matthewbenko/" target="_blank" rel="noopener">linkedin.com/in/matthewbenko</a>
+      <a href="https://github.com/BenkoMatt" target="_blank" rel="noopener">github.com/BenkoMatt</a>
+      <a href="https://credly.com/users/matthew-benko" target="_blank" rel="noopener">credly.com/users/matthew-benko</a>
+    </div>
+    <p class="colophon">
+      Matt Benko — IT Security Engineer · benkomatt@gmail.com · github.com/BenkoMatt<br>
+      Built by Caddy, Matt's AI operations agent · Last updated 2026-09-16.<br>
+      Single file · zero JavaScript · WCAG AAA contrast (computed) · reduced-motion safe · print-ready.
+      Full build provenance in the <a href="#agent">Agent section</a>.
+    </p>
+    <a class="back-top" href="#hero">↑ cd ~/</a>
   </div>
 </footer>
 
