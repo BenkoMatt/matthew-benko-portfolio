@@ -1458,6 +1458,41 @@ footer {
         </div>
       </article>
 
+      <article class="tile tile-accent-green">
+        <div class="term">
+          <div class="term-bar" aria-hidden="true">
+            <span class="term-dots"><i></i><i></i><i></i></span>
+            <span class="term-title">~/projects/yt2mp3-station — case study</span>
+            <span class="tile-status"><i></i>public</span>
+          </div>
+          <div class="term-body">
+            <h3>YT2MP3 Station — YouTube Queue &amp; MP3 Tools</h3>
+            <div class="tile-res">
+              <span class="tile-res-val">1-click</span>
+              <span class="tile-res-lbl">instant MP3 handoff plus a local yt-dlp command builder — zero stored media, zero accounts</span>
+            </div>
+            <dl class="case">
+              <div class="case-row">
+                <dt>problem</dt>
+                <dd>Public "YouTube → MP3" converters are ad-soaked, shady, and constantly get rate-limited or shut down — while GitHub Pages is static-only, so the obvious fix (host a real converter yourself there) is off the table.</dd>
+              </div>
+              <div class="case-row">
+                <dt>approach</dt>
+                <dd>Built a fully client-side station: queue and playback via YouTube's official privacy embed, state in localStorage. Saving is split by honesty — an instant button hands the current video to the open-source cobalt.tools converter with the link prefilled, and a command builder emits a ready-to-run yt-dlp/ffmpeg one-liner for high-quality local extraction. Files are always created on the user's machine.</dd>
+              </div>
+              <div class="case-row">
+                <dt>result</dt>
+                <dd><span class="r">A live station at mattbenko.xyz/yt2mp3</span> with public source — watch and queue anywhere, two clean save paths, no tracking and nothing stored.</dd>
+              </div>
+            </dl>
+            <p class="tile-friction"><span class="fl-label">constraint:</span> browser CORS walls mean a static page can never finish a conversion itself — "instant" is a prefilled handoff to cobalt.tools, and the page says so plainly instead of pretending.</p>
+            <p class="tile-stack"><span class="k">stack:</span> Static HTML/CSS/JS · yt-dlp · cobalt.tools · GitHub Pages</p>
+            <a class="tile-link" href="yt2mp3/" >open mattbenko.xyz/yt2mp3 — the station <span aria-hidden="true">→</span></a>
+            <a class="tile-link" href="https://github.com/BenkoMatt/yt2mp3-demo" target="_blank" rel="noopener">open github.com/BenkoMatt/yt2mp3-demo <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+
     </div>
   </section>
 
@@ -1678,7 +1713,7 @@ footer {
     </div>
     <p class="colophon">
       Matt Benko — IT Security Engineer · benkomatt@gmail.com · github.com/BenkoMatt<br>
-      Built by Caddy, Matt's AI operations agent · Last updated 2026-09-16.<br>
+      Built by Caddy, Matt's AI operations agent · Last updated 2026-10-08.<br>
       Single file · zero JavaScript · WCAG AAA contrast (computed) · reduced-motion safe · print-ready.
       Full build provenance in the <a href="#agent">Agent section</a>.
     </p>
