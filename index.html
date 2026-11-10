@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matthew Benko, IT security engineer</title>
-<meta name="description" content="IT security engineer in Michigan. 80% less phishing surface, 70-90% less malicious email, and PowerShell that gives the team its afternoons back.">
+<title>Matthew Benko, applications specialist</title>
+<meta name="description" content="Applications specialist at the Ottawa County Sheriff's Office, with a security engineer's record: 80% less phishing surface and 70-90% less malicious email.">
 <meta name="theme-color" content="#f0f4f7">
 <meta property="og:title" content="Matthew Benko, IT security engineer">
 <meta property="og:description" content="80% less phishing surface, 70-90% less malicious email, and the automation that keeps it that way. Case studies, credentials and contact.">
@@ -23,7 +23,7 @@
 /* Hallmark · pre-emit critique: P4 H4 E5 S5 R5 V5 · weakest: P, the argument is thin past the numbers, so every case leads with its outcome in display type */
 /* Hallmark · nav: wordmark left, four destinations, no action button · footer: colophon under a hairline · job: hire */
 /* Hallmark · dismissed 46a · 80%, 70-90%, 5,000 and 250+ are the owner's own figures, carried from his resume and the previous live site */
-/* Hallmark · dismissed 58 · the headline is one nine-word sentence; the page's 453 words are a CV's roles, credential IDs and education, and the densest 900px window is 78 */
+/* Hallmark · dismissed 58 · the headline is one sentence naming the job; the page's 450 words are a CV's roles, credential IDs and education, and the densest 900px window is 78 */
 
 /* ── Tokens ─────────────────────────────────────────────────────────────── */
 :root {
@@ -372,11 +372,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 .about-cols p { color: var(--color-ink-2); font-size: var(--text-lead); line-height: 1.55; max-width: 46ch; }
 
 /* ── Experience ─────────────────────────────────────────────────────────── */
-.exp-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-  gap: var(--space-2xl);
-}
+.exp-block h2 { margin-bottom: var(--space-xl); }
 .exp-note {
   margin-top: var(--space-lg);
   font-size: 0.9375rem;
@@ -384,6 +380,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
   color: var(--color-ink-2);
   max-width: 30ch;
 }
+#experience { padding-top: var(--space-4xl); }
 .exp-table { width: 100%; border-collapse: collapse; }
 .exp-table th {
   font-family: var(--font-display);
@@ -470,6 +467,8 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 }
 .skill h3 { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
 .skill p { margin-top: var(--space-xs); font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink-2); max-width: 42ch; }
+
+#skills { padding-block: var(--space-4xl); }
 
 /* ── Credentials ────────────────────────────────────────────────────────── */
 .edu {
@@ -607,7 +606,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
   .case { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "result" "body"; }
   .edu { grid-template-columns: minmax(0, 1fr); }
   .edu-list { grid-template-columns: minmax(0, 1fr); }
-  .exp-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+  .exp-block h2 { margin-bottom: var(--space-lg); }
   .exp-note { max-width: 46ch; }
   .nav-links { gap: var(--space-lg); }
 }
@@ -670,8 +669,8 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 <header class="hero" id="top">
   <div class="container intro-grid">
     <div class="intro-copy">
-      <h1>I cut attack surface, then prove the fix held.</h1>
-      <p class="intro-byline">IT security engineer at <span class="nowrap">Reed City Group</span>, Michigan.</p>
+      <h1>I write, patch and secure the software <span class="nowrap">a sheriff’s office</span> runs on.</h1>
+      <p class="intro-byline">Applications specialist <span class="nowrap">at the Ottawa County Sheriff’s Office</span>.</p>
       <div class="intro-actions">
         <a class="btn" href="mailto:benkomatt@gmail.com?subject=Security%20engineering">Send me an email</a>
         <a class="link-quiet" href="resume/Benko_InfoSec_2026_051326.pdf">Download resume (PDF)</a>
@@ -697,7 +696,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
       <div class="results-grid">
         <p class="result">
           <span class="result-num">80%</span>
-          <span class="result-label">less phishing surface after Conditional Access, MFA and geolocking went company-wide</span>
+          <span class="result-label">less phishing surface with Conditional Access, MFA and geolocking</span>
         </p>
         <p class="result">
           <span class="result-num">70-90%</span>
@@ -705,7 +704,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
         </p>
         <p class="result">
           <span class="result-num">5,000+</span>
-          <span class="result-label">enterprise risks moved, zero data-integrity incidents</span>
+          <span class="result-label">risks moved, zero data-integrity incidents</span>
         </p>
         <p class="result">
           <span class="result-num">250+</span>
@@ -720,14 +719,14 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
       <h2 id="about-h">From the help desk up</h2>
       <p class="about-statement">I like work where the result is checkable.</p>
       <div class="about-cols">
-        <p>I started at Hurley Medical Center in Flint on Wi-Fi tickets, then closed 300+ there the next summer.</p>
-        <p>Consumers Energy came next, then Reed City Group. I’ll finish a master’s at Ferris State in May 2026.</p>
+        <p>I started at Hurley Medical Center on Wi-Fi tickets, then closed 300+ that summer.</p>
+        <p>Consumers Energy came next, then Reed City Group. I finished the master’s in May. Since November I’ve written and supported the county’s applications.</p>
       </div>
     </div>
   </section>
 
   <section class="section" id="experience" aria-labelledby="experience-h">
-    <div class="container exp-grid">
+    <div class="container exp-block">
       <div>
         <h2 id="experience-h">Where I’ve worked</h2>
       </div>
@@ -737,7 +736,8 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
           <tr><th scope="col">Role</th><th scope="col">Organization</th><th scope="col">Years</th></tr>
         </thead>
         <tbody>
-          <tr><td class="role">IT Security Engineer</td><td class="org">Reed City Group</td><td class="years">2025 to now</td></tr>
+          <tr><td class="role">Applications Specialist</td><td class="org">Ottawa County Sheriff’s Office</td><td class="years">2026 to now</td></tr>
+          <tr><td class="role">IT Security Engineer</td><td class="org">Reed City Group</td><td class="years">2025-2026</td></tr>
           <tr><td class="role">Security Intern, GRC</td><td class="org">Consumers Energy</td><td class="years">2024-2025</td></tr>
           <tr><td class="role">Senior IT Extern</td><td class="org">Hurley Medical Center</td><td class="years">2022</td></tr>
           <tr><td class="role">IT Extern</td><td class="org">Hurley Medical Center</td><td class="years">2021</td></tr>
@@ -808,11 +808,19 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
         </div>
         <div class="skill">
           <h3>Network</h3>
-          <p>VLANs, routing, cabling. I pulled 2,000+ feet of CAT 5e/6 myself.</p>
+          <p>VLANs, routing, cabling. I pulled 2,000+ feet of CAT 5e/6.</p>
         </div>
         <div class="skill">
           <h3>Automation and governance</h3>
           <p>PowerShell, Python, risk management, audit support. Mostly automation.</p>
+        </div>
+        <div class="skill">
+          <h3>Applications and data</h3>
+          <p>SQL Server, Power Automate, Power BI, SharePoint. Writing and patching what staff use.</p>
+        </div>
+        <div class="skill">
+          <h3>Documentation and training</h3>
+          <p>Runbooks, onboarding guides and awareness training.</p>
         </div>
       </div>
     </div>
@@ -895,7 +903,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 
 <footer class="footer">
   <div class="container footer-inner">
-    <p class="colophon"><strong>Matthew Benko, IT security engineer. Reed City, Michigan.</strong><br>
+    <p class="colophon"><strong>Matthew Benko, applications specialist. Grand Rapids, Michigan.</strong><br>
     Built and maintained by Caddy, the AI agent I run.<br>
     One HTML file, no JavaScript. <span class="nowrap">Last updated November 2026.</span></p>
     <a class="back-top" href="#top">Back to the top</a>
