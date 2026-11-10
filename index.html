@@ -78,7 +78,7 @@
   --section-gap-l: clamp(112px, 11vw, 176px);
   --hero-pad:      var(--space-2xl);
   --row-pad:       clamp(28px, 3.2vw, 44px);
-  --case-pad:      clamp(56px, 10vw, 150px);
+  --case-pad:      clamp(48px, 8.4vw, 126px);
 
   --radius: 2px;
   --dur-micro: 120ms;
@@ -682,7 +682,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 
   <section class="results band" id="results" aria-labelledby="results-h">
     <div class="container">
-      <h2 id="results-h">Four numbers I can defend</h2>
+      <h2 id="results-h">Results</h2>
       <div class="results-grid">
         <p class="result">
           <span class="result-num">80%</span>
@@ -706,11 +706,11 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 
   <section class="section" id="about" aria-labelledby="about-h">
     <div class="container">
-      <h2 id="about-h">From the help desk up</h2>
-      <p class="about-statement">I like work where the result is checkable.</p>
+      <h2 id="about-h">Background</h2>
+      <p class="about-statement">I’ve worked in IT since 2021 and in security since 2024.</p>
       <div class="about-cols">
         <p>I started at Hurley Medical Center on Wi-Fi tickets, then closed 300+ that summer.</p>
-        <p>Consumers Energy came next, then Reed City Group. I finished the master’s in May. Since November I’ve written and supported the county’s applications.</p>
+        <p>Consumers Energy came next, then Reed City Group, where I ran identity, email security and endpoint. I finished the master’s in May. Since November I’ve written and supported the county’s applications.</p>
       </div>
     </div>
   </section>
@@ -718,7 +718,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
   <section class="section" id="experience" aria-labelledby="experience-h">
     <div class="container exp-block">
       <div>
-        <h2 id="experience-h">Where I’ve worked</h2>
+        <h2 id="experience-h">Employment</h2>
       </div>
       <table class="exp-table">
         <caption class="sr-only">Employment history</caption>
@@ -738,7 +738,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 
   <section class="section band" id="work" aria-labelledby="work-h">
     <div class="container">
-      <h2 id="work-h">Three things I built</h2>
+      <h2 id="work-h">Selected projects</h2>
 
       <div class="case-list">
 
@@ -749,7 +749,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
           </div>
           <p class="case-result">0 public inbound rules</p>
           <div class="case-body">
-            <p>SSH was open with no firewall policy. I rebuilt it deny-by-default, moved admin access onto the mesh, and published the scans.</p>
+            <p>SSH was open with no firewall policy. I rebuilt it deny-by-default, moved admin access onto Tailscale, and published the scan results.</p>
             <p class="case-links"><a href="https://github.com/BenkoMatt/VPS-Security-Hardening-Report" target="_blank" rel="noopener">The report on GitHub</a></p>
           </div>
         </article>
@@ -759,9 +759,9 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
             <h3>Cybersecurity Frameworks Guide</h3>
             <p class="case-meta">2025, reference guide</p>
           </div>
-          <p class="case-result">Four frameworks, one map</p>
+          <p class="case-result">One crosswalk, four frameworks</p>
           <div class="case-body">
-            <p>NIST, ISO 27001, CIS and MITRE each assume you speak their language. I wrote the map between them.</p>
+            <p>NIST, ISO 27001, CIS and MITRE describe the same controls in different words. I wrote the crosswalk between them.</p>
             <p class="case-links"><a href="https://github.com/BenkoMatt/Claw-Framework-Report" target="_blank" rel="noopener">The guide on GitHub</a></p>
           </div>
         </article>
@@ -771,9 +771,9 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
             <h3>YT2MP3 Station</h3>
             <p class="case-meta">2026, static HTML, yt-dlp</p>
           </div>
-          <p class="case-result">Live at mattbenko.xyz/yt2mp3</p>
+          <p class="case-result">No server involved</p>
           <div class="case-body">
-            <p>Converters are mostly ads and dead links. Mine is client-side, with two honest save paths.</p>
+            <p>Most converters are ad-heavy or stop working. This one runs in the browser and saves MP3 or MP4.</p>
             <p class="case-links"><a href="yt2mp3/">The station</a><a href="https://github.com/BenkoMatt/yt2mp3-demo" target="_blank" rel="noopener">Source on GitHub</a></p>
           </div>
         </article>
@@ -786,7 +786,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 
   <section class="section" id="skills" aria-labelledby="skills-h">
     <div class="container">
-      <h2 id="skills-h">What I actually touch</h2>
+      <h2 id="skills-h">Tools</h2>
       <div class="skill-grid">
         <div class="skill">
           <h3>Identity and access</h3>
@@ -802,11 +802,11 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
         </div>
         <div class="skill">
           <h3>Automation and governance</h3>
-          <p>PowerShell, Python, risk management, audit support. Mostly automation.</p>
+          <p>PowerShell, Python, risk management and audit support.</p>
         </div>
         <div class="skill">
           <h3>Applications and data</h3>
-          <p>SQL Server, Power Automate, Power BI, SharePoint. Writing and patching what staff use.</p>
+          <p>SQL Server, Power Automate, Power BI, SharePoint.</p>
         </div>
         <div class="skill">
           <h3>Documentation and training</h3>
@@ -818,7 +818,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 
   <section class="section band" id="credentials" aria-labelledby="credentials-h">
     <div class="container">
-      <h2 id="credentials-h">Credentials you can check</h2>
+      <h2 id="credentials-h">Credentials</h2>
       <table class="cred-table">
           <caption class="sr-only">Certifications with public verification where available</caption>
           <thead>
@@ -875,7 +875,7 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
     <div class="container contact-grid">
       <div>
         <h2 id="contact-h">Get in touch</h2>
-        <p class="contact-lede">Email is the fastest way to reach me. If you’re hiring, or you want a second opinion on an email security problem, send a note.</p>
+        <p class="contact-lede">Email is the fastest way to reach me.</p>
       </div>
       <div class="contact-direct">
         <a class="contact-email" href="mailto:benkomatt@gmail.com?subject=Security%20engineering">benkomatt@gmail.com</a>
@@ -894,7 +894,6 @@ html { scrollbar-color: var(--color-rule-strong) var(--color-paper-2); }
 <footer class="footer">
   <div class="container footer-inner">
     <p class="colophon"><strong>Matthew Benko, applications specialist. Grand Rapids, Michigan.</strong><br>
-    Built and maintained by Caddy, the AI agent I run.<br>
     One HTML file, no JavaScript. <span class="nowrap">Last updated November 2026.</span></p>
     <a class="back-top" href="#top">Back to the top</a>
   </div>
